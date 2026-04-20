@@ -55,7 +55,7 @@ export default function HeroSection() {
                     <div className=" lg:pr-6">
                         {/* Main Headline */}
                         <div className="hero-reveal">
-                            <h1 className="max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.02] tracking-tight text-white mb-6 min-h-[10.5rem] md:min-h-[13rem] lg:min-h-[16rem]">
+                            <h1 className="max-w-2xl text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.02] tracking-tight text-white mb-6 min-h-42 md:min-h-52 lg:min-h-64">
                                 {typedHeadline.includes('Dream') ? (
                                     <>
                                         {typedHeadline.slice(0, typedHeadline.indexOf('Dream'))}
@@ -74,7 +74,7 @@ export default function HeroSection() {
                         </div>
 
                         {/* Description */}
-                        <p className="hero-reveal hero-delay-1 max-w-xl text-base sm:text-lg leading-8 text-blue-50/90 font-light min-h-[7rem]">
+                        <p className="hero-reveal hero-delay-1 max-w-xl text-base sm:text-lg leading-8 text-blue-50/90 font-light min-h-28">
                             {typedDescription}
                         </p>
 
@@ -107,17 +107,17 @@ export default function HeroSection() {
 
             {/* Support chips */}
             <div className="hero-reveal hero-delay-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-10 m-3">
-                <div className="support-card-entry support-card-delay-1 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
+                <div className="support-card-entry support-card-delay-1 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-linear-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
                     <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-blue-100/15"></div>
                     <p className="text-3xl md:text-4xl font-black text-white">10K+</p>
                     <p className="mt-1 text-blue-50/85 text-sm font-medium uppercase tracking-wide">Students placed</p>
                 </div>
-                <div className="support-card-entry support-card-delay-2 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
+                <div className="support-card-entry support-card-delay-2 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-linear-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
                     <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-blue-100/15"></div>
                     <p className="text-3xl md:text-4xl font-black text-white">98%</p>
                     <p className="mt-1 text-blue-50/85 text-sm font-medium uppercase tracking-wide">Success rate</p>
                 </div>
-                <div className="support-card-entry support-card-delay-3 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
+                <div className="support-card-entry support-card-delay-3 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-linear-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
                     <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-blue-100/15"></div>
                     <p className="text-3xl md:text-4xl font-black text-white">15+</p>
                     <p className="mt-1 text-blue-50/85 text-sm font-medium uppercase tracking-wide">Years active</p>
