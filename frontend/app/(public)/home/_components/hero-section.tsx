@@ -106,7 +106,7 @@ export default function HeroSection() {
             </div>
 
             {/* Support chips */}
-            <div className="hero-reveal hero-delay-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-5 m-3">
+            <div className="hero-reveal hero-delay-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-10 m-3">
                 <div className="support-card-entry support-card-delay-1 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
                     <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-blue-100/15"></div>
                     <p className="text-3xl md:text-4xl font-black text-white">10K+</p>
