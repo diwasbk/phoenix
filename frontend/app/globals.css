@@ -24,3 +24,102 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealImage {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-reveal {
+  opacity: 0;
+  animation: revealUp 0.7s ease-out forwards;
+}
+
+.hero-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.3s;
+}
+
+.hero-delay-3 {
+  animation-delay: 0.45s;
+}
+
+.cta-entry {
+  opacity: 0;
+  animation: revealUp 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.cta-entry-1 {
+  animation-delay: 0.5s;
+}
+
+.cta-entry-2 {
+  animation-delay: 0.62s;
+}
+
+.support-card-entry {
+  opacity: 0;
+  animation: revealUp 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+.support-card-delay-1 {
+  animation-delay: 0.58s;
+}
+
+.support-card-delay-2 {
+  animation-delay: 0.68s;
+}
+
+.support-card-delay-3 {
+  animation-delay: 0.78s;
+}
+
+.support-card-delay-4 {
+  animation-delay: 0.88s;
+}
+
+.support-card-delay-5 {
+  animation-delay: 0.98s;
+}
+
+.support-card-delay-6 {
+  animation-delay: 1.08s;
+}
+
+.featured-image-entry {
+  opacity: 0;
+  animation: revealImage 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: 0.38s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal,
+  .cta-entry,
+  .support-card-entry,
+  .featured-image-entry {
+    opacity: 1;
+    animation: none;
+  }
+}
