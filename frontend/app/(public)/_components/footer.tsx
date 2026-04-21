@@ -120,8 +120,6 @@ export default function Footer() {
                                 </svg>
                             </a>
 
-                            
-
                             {/* Facebook */}
                             <a
                                 href="https://facebook.com"
