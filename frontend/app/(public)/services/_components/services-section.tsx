@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const services = [
@@ -47,11 +48,28 @@ const serviceFlow = [
 ];
 
 export default function ServicesSection() {
+    const getImpactWidth = (value: string) => {
+        const parsed = Number.parseInt(value.replace('%', ''), 10);
+        if (Number.isNaN(parsed)) {
+            return 0;
+        }
+        return Math.max(0, Math.min(parsed, 100));
+    };
+
     return (
         <main className="overflow-hidden bg-white text-slate-900">
             {/* Hero section */}
-            <section className="relative bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 px-4 py-10 text-white sm:px-6 lg:px-8">
+            <section className="relative overflow-hidden px-4 py-10 text-white sm:px-6 lg:px-8">
+                <Image
+                    src="/service.jpg"
+                    alt="Study abroad services hero"
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                    priority
+                />
                 <div className="pointer-events-none absolute inset-0">
+                    <div className="absolute inset-0 bg-linear-to-br from-blue-950/55 via-blue-900/35 to-blue-800/10"></div>
                     <div className="absolute -left-20 top-14 h-72 w-72 rounded-full bg-cyan-200/10 blur-3xl animate-pulse"></div>
                     <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-blue-100/10 blur-3xl animate-pulse"></div>
                 </div>
@@ -84,19 +102,19 @@ export default function ServicesSection() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 opacity-0 animate-[revealUp_0.8s_ease-out_0.18s_forwards]">
-                            <article className="rounded-2xl border border-blue-200/30 bg-white/10 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
+                            <article className="rounded-2xl border border-blue-200/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
                                 <p className="text-3xl font-black text-white sm:text-4xl">6</p>
                                 <p className="mt-2 text-sm uppercase tracking-wide text-blue-100/90">Core Services</p>
                             </article>
-                            <article className="rounded-2xl border border-blue-200/30 bg-white/10 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
+                            <article className="rounded-2xl border border-blue-200/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
                                 <p className="text-3xl font-black text-white sm:text-4xl">98%</p>
                                 <p className="mt-2 text-sm uppercase tracking-wide text-blue-100/90">Application Accuracy</p>
                             </article>
-                            <article className="rounded-2xl border border-blue-200/30 bg-white/10 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
+                            <article className="rounded-2xl border border-blue-200/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
                                 <p className="text-3xl font-black text-white sm:text-4xl">360</p>
                                 <p className="mt-2 text-sm uppercase tracking-wide text-blue-100/90">Support Approach</p>
                             </article>
-                            <article className="rounded-2xl border border-blue-200/30 bg-white/10 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
+                            <article className="rounded-2xl border border-blue-200/30 bg-white/20 p-5 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15">
                                 <p className="text-3xl font-black text-white sm:text-4xl">1:1</p>
                                 <p className="mt-2 text-sm uppercase tracking-wide text-blue-100/90">Counseling Style</p>
                             </article>
@@ -157,7 +175,7 @@ export default function ServicesSection() {
                                     <p className="mt-2 text-xl font-black text-slate-900">1:1 Guidance</p>
                                     <p className="mt-2 text-sm leading-6 text-slate-600">A counselor stays aligned with your profile.</p>
                                 </div>
-                                <div className="col-span-2 rounded-2xl border border-blue-100 bg-linear-to-r from-blue-950 to-blue-800 p-5 text-white shadow-lg">
+                                <div className="col-span-2 rounded-2xl border border-blue-100 bg-linear-to-r from-blue-900 to-blue-800 p-5 text-white shadow-lg">
                                     <div className="flex items-center justify-between gap-4">
                                         <div>
                                             <p className="text-sm font-semibold uppercase tracking-[0.15em] text-cyan-200">Service Strength</p>
@@ -181,64 +199,157 @@ export default function ServicesSection() {
             </section>
 
             {/* Services grid section */}
-            <section className="bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">
+            <section className="relative overflow-hidden bg-slate-100 px-4 py-10 sm:px-6 lg:px-8">
+                <div className="pointer-events-none absolute inset-0">
+                    <div className="absolute left-0 top-0 h-64 w-64 rounded-full bg-cyan-200/40 blur-3xl"></div>
+                    <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl"></div>
+                </div>
                 <div className="mx-auto max-w-7xl">
-                    <div className="max-w-2xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
-                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">What We Offer</p>
-                        <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                            Core Consultancy Services
-                        </h2>
-                    </div>
+                    <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-[0.95fr_1.45fr]">
+                        <article className="flex h-full flex-col rounded-3xl bg-linear-to-br from-blue-900 via-blue-900 to-cyan-700 p-7 text-white shadow-xl shadow-blue-900/30 opacity-0 animate-[revealUp_0.75s_ease-out_forwards] sm:p-8">
+                            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">What We Offer</p>
+                            <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Core Consultancy Services</h2>
+                            <p className="mt-5 text-base leading-8 text-blue-100/95">
+                                Every service is connected to the next, so you always know where you stand and what to do next in your study abroad journey.
+                            </p>
+                            <div className="mt-8 grid grid-cols-2 gap-4">
+                                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md">
+                                    <p className="text-2xl font-black">6</p>
+                                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-100">Focused Services</p>
+                                </div>
+                                <div className="rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md">
+                                    <p className="text-2xl font-black">98%</p>
+                                    <p className="mt-1 text-xs font-semibold uppercase tracking-[0.15em] text-cyan-100">Peak Support Score</p>
+                                </div>
+                            </div>
 
-                    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-                        {services.map((service, index) => (
-                            <article
-                                key={service.title}
-                                className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm opacity-0 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
-                                style={{ animation: `revealUp 0.65s ease-out ${index * 0.1 + 0.1}s forwards` }}
-                            >
-                                <div className="flex items-start justify-between gap-4">
-                                    <h3 className="text-xl font-bold text-slate-900">{service.title}</h3>
-                                    <div className="relative h-14 w-14 shrink-0 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#2563eb_0_#0ea5e9_70%,#dbeafe_70%_100%)]">
-                                        <div className="absolute inset-1 flex items-center justify-center rounded-full bg-white text-[11px] font-bold text-blue-700">
-                                            {service.impact}
-                                        </div>
+                            <div className="mt-8 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-md">
+                                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">Inside Every Service</p>
+                                <ul className="mt-4 space-y-2 text-sm text-blue-100/95">
+                                    <li className="flex items-center gap-2">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                        Clear next-step planning for each stage
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                        Practical, profile-based recommendations
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                        Fast follow-up and decision support
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className="mt-6 flex-1 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-md">
+                                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">What You Get With Us</p>
+                                <div className="mt-4 space-y-3">
+                                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                                        <p className="text-sm font-semibold text-white">Clarity From Day One</p>
+                                        <p className="mt-1 text-xs leading-6 text-blue-100/90">
+                                            You get a clear route for universities, deadlines, and documents before the process gets overwhelming.
+                                        </p>
+                                    </div>
+                                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                                        <p className="text-sm font-semibold text-white">Error-Reduced Applications</p>
+                                        <p className="mt-1 text-xs leading-6 text-blue-100/90">
+                                            We double-check key materials so your submission is consistent, polished, and admission-ready.
+                                        </p>
+                                    </div>
+                                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                                        <p className="text-sm font-semibold text-white">Support Beyond Submission</p>
+                                        <p className="mt-1 text-xs leading-6 text-blue-100/90">
+                                            From visa steps to departure prep, you continue getting practical guidance when it matters most.
+                                        </p>
                                     </div>
                                 </div>
-                                <p className="mt-3 text-base leading-7 text-slate-600">{service.description}</p>
-                                <ul className="mt-5 space-y-2">
-                                    {service.points.map((point) => (
-                                        <li key={point} className="flex items-center gap-3 text-sm font-medium text-slate-700">
-                                            <span className="h-2.5 w-2.5 rounded-full bg-cyan-500"></span>
-                                            {point}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div className="mt-5 h-2 rounded-full bg-blue-100">
-                                    <div className="h-2 w-[88%] rounded-full bg-linear-to-r from-blue-700 to-cyan-500 transition-all duration-700 group-hover:w-[96%]"></div>
-                                </div>
-                            </article>
-                        ))}
-                    </div>
-                </div>
-            </section>
 
-            {/* CTA section */}
-            <section className="bg-linear-to-r from-blue-950 via-blue-900 to-blue-800 px-4 py-10 text-white sm:px-6 lg:px-8">
-                <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
-                    <div className="max-w-2xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
-                        <p className="text-sm font-semibold uppercase tracking-[0.15em] text-cyan-200">Ready To Start?</p>
-                        <h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Let Us Build the Right Service Plan for You</h2>
-                        <p className="mt-4 text-base leading-7 text-blue-100/90">
-                            Book a consultation and get the exact support you need for your destination, deadline, and profile.
-                        </p>
+                                <p className="mt-4 text-xs leading-6 text-cyan-100/95">
+                                    Focused counseling that improves decision quality, reduces avoidable mistakes, and keeps momentum high.
+                                </p>
+
+                                <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3">
+                                    <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-cyan-100">Best For</p>
+                                    <ul className="mt-3 space-y-2 text-xs leading-6 text-blue-100/95">
+                                        <li className="flex items-center gap-2">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                            Students unsure about country and course alignment
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                            Applicants balancing deadlines, budget, and visa prep
+                                        </li>
+                                        <li className="flex items-center gap-2">
+                                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-300"></span>
+                                            Families seeking structured guidance from start to departure
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className="mt-4 flex flex-wrap gap-2">
+                                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold text-cyan-100">Profile-Based Planning</span>
+                                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold text-cyan-100">Clear Timelines</span>
+                                    <span className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold text-cyan-100">Decision Support</span>
+                                </div>
+                            </div>
+
+                            <div className="mt-5">
+                                <Link
+                                    href="/contact"
+                                    className="mt-5 inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50"
+                                >
+                                    Talk To A Counselor
+                                </Link>
+                            </div>
+                        </article>
+
+                        <div className="space-y-4">
+                            {services.map((service, index) => (
+                                <article
+                                    key={service.title}
+                                    className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm opacity-0 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-lg sm:p-6"
+                                    style={{ animation: `revealUp 0.6s ease-out ${index * 0.08 + 0.1}s forwards` }}
+                                >
+                                    <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                                        <div className="min-w-0">
+                                            <div className="flex items-center gap-3">
+                                                <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-700">
+                                                    {String(index + 1).padStart(2, '0')}
+                                                </span>
+                                                <h3 className="text-xl font-bold text-slate-900">{service.title}</h3>
+                                            </div>
+                                            <p className="mt-3 text-base leading-7 text-slate-600">{service.description}</p>
+                                        </div>
+
+                                        <div className="w-full shrink-0 lg:w-52">
+                                            <div className="rounded-2xl border border-blue-100 bg-blue-50/70 p-4">
+                                                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">Support Confidence</p>
+                                                <p className="mt-2 text-3xl font-black text-blue-900">{service.impact}</p>
+                                                <div className="mt-3 h-2 rounded-full bg-blue-100">
+                                                    <div
+                                                        className="h-2 rounded-full bg-linear-to-r from-blue-700 to-cyan-500 transition-all duration-700 group-hover:brightness-110"
+                                                        style={{ width: `${getImpactWidth(service.impact)}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <ul className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
+                                        {service.points.map((point) => (
+                                            <li
+                                                key={point}
+                                                className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700"
+                                            >
+                                                <span className="h-2 w-2 rounded-full bg-cyan-500"></span>
+                                                {point}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </article>
+                            ))}
+                        </div>
                     </div>
-                    <Link
-                        href="/contact"
-                        className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 font-semibold text-blue-950 opacity-0 animate-[revealUp_0.7s_ease-out_0.12s_forwards] transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50"
-                    >
-                        Book Consultation
-                    </Link>
                 </div>
             </section>
         </main>

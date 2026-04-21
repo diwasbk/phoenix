@@ -41,7 +41,7 @@ export default function JapanSection() {
                     priority
                 />
                 <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0 bg-linear-to-br from-blue-950/75 via-blue-900/70 to-blue-800/20"></div>
+                    <div className="absolute inset-0 bg-linear-to-br from-blue-950/55 via-blue-900/35 to-blue-800/10"></div>
                     <div className="absolute -left-16 top-12 h-72 w-72 rounded-full bg-cyan-200/10 blur-3xl"></div>
                     <div className="absolute -right-20 bottom-8 h-80 w-80 rounded-full bg-blue-100/10 blur-3xl"></div>
                 </div>
@@ -117,9 +117,9 @@ export default function JapanSection() {
                         </Link>
                     </div>
 
-                    <div className="rounded-3xl border border-blue-100 bg-white p-5 shadow-xl shadow-blue-100/60 opacity-0 animate-[revealUp_0.7s_ease-out_0.12s_forwards] sm:p-6">
+                    <div className="mt-15 rounded-3xl border border-blue-100 bg-white p-5 shadow-xl shadow-blue-100/60 opacity-0 animate-[revealUp_0.7s_ease-out_0.12s_forwards] sm:p-6">
                         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">Admission Infographic</p>
-                        <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Japan Success Flow</h3>
+                        <h3 className="text-2xl font-black tracking-tight text-slate-900">Japan Success Flow</h3>
 
                         <div className="mt-5 rounded-2xl border border-blue-100 bg-slate-50 p-3">
                             <svg viewBox="0 0 720 260" className="h-auto w-full" role="img" aria-labelledby="japan-flow-title japan-flow-desc">

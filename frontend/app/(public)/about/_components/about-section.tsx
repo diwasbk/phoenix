@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 const coreValues = [
     {
@@ -43,6 +46,9 @@ const studentJourneyFlow = [
 ];
 
 export default function AboutSection() {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const activeValue = coreValues[currentSlide] ?? coreValues[0];
+
     return (
         <main className="overflow-hidden bg-white text-slate-900">
             <section className="relative bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 px-4 py-10 text-white sm:px-6 lg:px-8">
@@ -101,93 +107,6 @@ export default function AboutSection() {
                 </div>
             </section>
 
-            <section className="relative bg-white px-4 py-10 sm:px-6 lg:px-8">
-                {/* Infographic snapshot section */}
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute left-8 top-8 h-36 w-36 rounded-full bg-cyan-100/60 blur-3xl"></div>
-                    <div className="absolute right-8 bottom-8 h-44 w-44 rounded-full bg-blue-100/60 blur-3xl"></div>
-                </div>
-
-                <div className="relative z-10 mx-auto max-w-7xl">
-                    <div className="max-w-3xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
-                        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Infographic Snapshot</p>
-                        <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
-                            How Students Progress With Phoenix
-                        </h2>
-                        <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-                            A visual overview of our counseling pipeline, where each step is designed to reduce uncertainty and improve outcomes.
-                        </p>
-                    </div>
-
-                    <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
-                        <article className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 p-6 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_0.12s_forwards] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-700">Student Journey Funnel</p>
-                            <div className="mt-5 space-y-4">
-                                {studentJourneyFlow.map((item) => (
-                                    <div key={item.stage}>
-                                        <div className="mb-1 flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-slate-600">
-                                            <span>{item.stage}</span>
-                                            <span>{item.value}</span>
-                                        </div>
-                                        <div className="h-2.5 rounded-full bg-blue-100">
-                                            <div className={`h-2.5 rounded-full bg-linear-to-r from-blue-700 to-cyan-500 transition-all duration-700 ${item.widthClass}`}></div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </article>
-
-                        <article className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 p-6 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_0.2s_forwards] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-700">Support Coverage</p>
-                            <div className="mt-5 flex items-center justify-center">
-                                <div className="relative h-44 w-44 rounded-full border-14 border-blue-100 bg-white">
-                                    <div
-                                        className="absolute inset-0 m-auto h-44 w-44 rounded-full border-14 border-cyan-400 border-t-blue-700 border-r-blue-700 border-b-cyan-400 border-l-blue-200 animate-spin"
-                                        style={{ animationDuration: '7s' }}
-                                    ></div>
-                                    <div className="absolute inset-0 m-auto flex h-28 w-28 items-center justify-center rounded-full bg-blue-950 text-center text-white shadow-lg">
-                                        <div>
-                                            <p className="text-2xl font-black">360</p>
-                                            <p className="text-xs uppercase tracking-wide text-blue-100">Care</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="mt-5 text-center text-sm leading-7 text-slate-600">
-                                We support academics, documents, applications, visa, and pre-departure readiness under one guided framework.
-                            </p>
-                        </article>
-
-                        <article className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 p-6 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_0.28s_forwards] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                            <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-700">Result Timeline</p>
-                            <div className="mt-6 space-y-5">
-                                <div className="flex items-start gap-3">
-                                    <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-cyan-500 animate-pulse"></span>
-                                    <div>
-                                        <p className="text-sm font-bold text-slate-900">Week 1-2: Profile & Goal Mapping</p>
-                                        <p className="text-sm text-slate-600">Target countries and realistic university tracks are finalized.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-3">
-                                    <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-blue-600 animate-pulse"></span>
-                                    <div>
-                                        <p className="text-sm font-bold text-slate-900">Week 3-6: Application Execution</p>
-                                        <p className="text-sm text-slate-600">SOP refinement, document packaging, and submissions are completed.</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-3">
-                                    <span className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <div>
-                                        <p className="text-sm font-bold text-slate-900">Final Stage: Visa & Departure Prep</p>
-                                        <p className="text-sm text-slate-600">Interview prep, checklists, and transition support for smooth onboarding.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
             <section className="relative px-4 pb-10 sm:px-6 lg:px-8">
                 {/* Mission and vision section */}
                 <div className="pointer-events-none absolute inset-0">
@@ -213,49 +132,88 @@ export default function AboutSection() {
                 </div>
             </section>
 
-            <section className="bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">
+            <section className="relative mb-12 px-4 sm:px-6 lg:px-8">
                 {/* Core values section */}
-                <div className="mx-auto max-w-7xl">
-                    <div className="max-w-2xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
+                <div className="pointer-events-none absolute inset-0">
+                    <div className="absolute left-0 top-8 h-40 w-40 rounded-full bg-cyan-100/50 blur-3xl"></div>
+                    <div className="absolute right-0 top-20 h-44 w-44 rounded-full bg-blue-100/50 blur-3xl"></div>
+                </div>
+
+                <div className="relative z-10 mx-auto max-w-6xl">
+                    <div className="max-w-3xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">What Defines Us</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
                             Core Values Behind Every Student Journey
                         </h2>
+                        <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+                            A focused view of the principles that shape every counseling decision and student outcome.
+                        </p>
                     </div>
 
-                    <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-                        {coreValues.map((value, index) => (
-                            <article
-                                key={value.title}
-                                className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm opacity-0 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
-                                style={{ animation: `revealUp 0.65s ease-out ${index * 0.1 + 0.1}s forwards` }}
-                            >
-                                <div className="flex items-start justify-between gap-4">
-                                    <h3 className="text-xl font-bold text-slate-900">{value.title}</h3>
-                                    <div
-                                        className="relative h-14 w-14 shrink-0 rounded-full"
-                                        style={{
-                                            background: `conic-gradient(#2563eb ${value.impact}, #dbeafe 0)`,
-                                        }}
-                                    >
-                                        <div className="absolute inset-1 flex items-center justify-center rounded-full bg-white text-[11px] font-bold text-blue-700">
-                                            {value.impact}
-                                        </div>
-                                    </div>
-                                </div>
-                                <p className="mt-3 text-base leading-7 text-slate-600">{value.description}</p>
+                    <div
+                        className="mt-10 grid grid-cols-1 gap-6 rounded-3xl border border-blue-100 bg-white p-4 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_0.08s_forwards] sm:p-5"
+                        role="tablist"
+                        aria-label="Core value tabs"
+                    >
+                        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
+                            {coreValues.map((value, index) => (
+                                <button
+                                    key={value.title}
+                                    type="button"
+                                    role="tab"
+                                    aria-selected={index === currentSlide}
+                                    aria-controls={`core-value-panel-${index}`}
+                                    id={`core-value-tab-${index}`}
+                                    onClick={() => setCurrentSlide(index)}
+                                    className={`rounded-2xl border px-4 py-3 text-left transition-all duration-300 ${index === currentSlide
+                                            ? 'border-blue-300 bg-linear-to-r from-blue-50 to-cyan-50 shadow-sm'
+                                            : 'border-slate-200 bg-white hover:border-blue-200 hover:bg-slate-50'
+                                        }`}
+                                >
+                                    <p className={`text-sm font-bold tracking-tight ${index === currentSlide ? 'text-blue-800' : 'text-slate-800'}`}>
+                                        {value.title}
+                                    </p>
+                                    <p className={`mt-1 text-xs font-semibold uppercase tracking-[0.14em] ${index === currentSlide ? 'text-blue-700' : 'text-slate-500'}`}>
+                                        {value.metricLabel}
+                                    </p>
+                                </button>
+                            ))}
+                        </div>
 
-                                <div className="mt-5">
-                                    <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-slate-500">
-                                        <span>{value.metricLabel}</span>
-                                        <span>{value.metricValue}</span>
-                                    </div>
-                                    <div className="mt-2 h-2 rounded-full bg-blue-100">
-                                        <div className={`h-2 rounded-full bg-linear-to-r from-blue-700 to-cyan-500 ${value.progressWidth}`}></div>
-                                    </div>
+                        <article
+                            id={`core-value-panel-${currentSlide}`}
+                            role="tabpanel"
+                            aria-labelledby={`core-value-tab-${currentSlide}`}
+                            className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/60 p-6 shadow-sm transition-all duration-300 sm:p-7"
+                        >
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                                <h3 className="text-2xl font-black tracking-tight text-slate-800">{activeValue.title}</h3>
+                                <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-1.5">
+                                    <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Confidence</span>
+                                    <span className="text-sm font-black text-blue-800">{activeValue.impact}</span>
                                 </div>
-                            </article>
-                        ))}
+                            </div>
+
+                            <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">{activeValue.description}</p>
+
+                            <div className="mt-6 h-3 rounded-full bg-blue-100">
+                                <div
+                                    className="h-3 rounded-full bg-linear-to-r from-blue-700 to-cyan-500 transition-all duration-700"
+                                    style={{ width: activeValue.impact }}
+                                ></div>
+                            </div>
+
+                            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                                <div className="rounded-2xl border border-blue-100 bg-white p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">{activeValue.metricLabel}</p>
+                                    <p className="mt-1 text-lg font-black text-slate-700">{activeValue.metricValue}</p>
+                                </div>
+                                <div className="rounded-2xl border border-blue-100 bg-white p-4">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Service Standard</p>
+                                    <p className="mt-1 text-lg font-black text-slate-700">Student-First Counseling</p>
+                                </div>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </section>
