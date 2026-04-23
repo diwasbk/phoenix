@@ -90,7 +90,7 @@ export default function CTASection() {
 
                                 {/* Secondary CTA Button */}
                                 <Link
-                                    href="/contact"
+                                    href="/inquiry"
                                     className="inline-flex items-center justify-center rounded-full border border-blue-950/30 bg-blue-950/5 px-8 py-4 text-base font-semibold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:border-blue-950/50 hover:bg-blue-950/10 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-white"
                                 >
                                     Schedule a Consultation

@@ -1,10 +1,12 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const pathname = usePathname();
 
     const navItems = [
         { label: 'Home', href: '/' },
@@ -13,6 +15,8 @@ export default function NavBar() {
         { label: 'Study in Japan', href: '/japan' },
         { label: 'Destinations', href: '/destinations' },
     ];
+
+    const isActiveLink = (href: string) => (href === '/' ? pathname === href : pathname.startsWith(href));
 
     return (
         <nav className="sticky top-0 z-50 animate-fade-in-down border-b border-gray-200 bg-white">
@@ -37,22 +41,22 @@ export default function NavBar() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className="text-gray-700 hover:text-blue-600 px-4 py-2 rounded-lg transition-all duration-300 relative group text-[12px] uppercase tracking-wide"
+                                className={`px-4 py-2 rounded-lg transition-all duration-300 relative group text-[12px] uppercase tracking-wide ${isActiveLink(item.href) ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'}`}
                             >
                                 {item.label}
-                                <span className="absolute bottom-1 left-4 w-0 h-1 bg-linear-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-300 group-hover:right-4 group-hover:w-[calc(100%-2rem)]"></span>
+                                <span className={`absolute bottom-1 left-4 h-1 rounded-full bg-linear-to-r from-blue-600 to-blue-400 transition-all duration-300 ${isActiveLink(item.href) ? 'right-4 w-[calc(100%-2rem)]' : 'w-0 group-hover:right-4 group-hover:w-[calc(100%-2rem)]'}`}></span>
                             </Link>
                         ))}
                     </div>
 
                     {/* CTA Buttons */}
                     <div className="hidden md:flex gap-3">
-                        <button className="border-2 border-gray-200 text-gray-500 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-300 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
+                        <Link href={"/inquiry"} className="border-2 border-gray-200 text-gray-500 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-300 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
                             Inquiry
-                        </button>
-                        <button className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:cursor-pointer">
+                        </Link>
+                        <Link href={"/apply"} className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-blue-700 transition-all duration-300 hover:shadow-lg hover:cursor-pointer">
                             Apply Now
-                        </button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -82,7 +86,7 @@ export default function NavBar() {
                                 <Link
                                     key={item.href}
                                     href={item.href}
-                                    className="block px-4 py-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-semibold transition-all duration-300 hover:translate-x-2 uppercase text-sm tracking-wide"
+                                    className={`block px-4 py-3 rounded-lg font-semibold transition-all duration-300 hover:translate-x-2 uppercase text-sm tracking-wide ${isActiveLink(item.href) ? 'bg-blue-50 text-blue-600 underline decoration-2 underline-offset-8' : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600'}`}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     {item.label}

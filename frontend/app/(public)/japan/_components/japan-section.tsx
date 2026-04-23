@@ -1,33 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const supportTrack = [
-    {
-        step: '01',
-        title: 'Japan Profile Review',
-        text: 'We align your academics, budget, and timeline with realistic universities in Japan.',
-    },
-    {
-        step: '02',
-        title: 'Application Strategy',
-        text: 'We prepare SOP, document sequencing, and intake-wise shortlists for stronger submissions.',
-    },
-    {
-        step: '03',
-        title: 'Visa And Departure',
-        text: 'We guide visa paperwork, interview readiness, and pre-departure planning in one flow.',
-    },
-];
-
-const japanHighlights = [
-    '100% COE RESULTS',
-    'FREE LANGUAGE CLASSES',
-    'EASY DOCUMENTATION',
-    'PAY AFTER VISA',
-    'CHOICE OF YOUR CITY',
-    'LANGUAGE CLASS BY EXPERT TEACHERS',
-];
-
 export default function JapanSection() {
     return (
         <main className="overflow-hidden bg-white text-slate-900">
@@ -58,7 +31,7 @@ export default function JapanSection() {
 
                         <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                             <Link
-                                href="/contact"
+                                href="/inquiry"
                                 className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 font-semibold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50"
                             >
                                 Start Your Japan Plan
@@ -110,7 +83,7 @@ export default function JapanSection() {
                         </div>
 
                         <Link
-                            href="/contact"
+                            href="/inquiry"
                             className="mt-7 inline-flex items-center justify-center rounded-full bg-blue-900 px-7 py-3 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800"
                         >
                             Book Your Japan Consultation

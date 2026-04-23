@@ -1,12 +1,16 @@
+import Image from 'next/image';
+import Link from 'next/link';
+
 type DestinationCardProps = {
     country: string;
     delay: string;
     isVisible: boolean;
     className?: string;
     countryCode?: string;
+    flagSrc?: string;
 };
 
-export default function DestinationCard({ country, delay, isVisible, className, countryCode }: DestinationCardProps) {
+export default function DestinationCard({ country, delay, isVisible, className, countryCode, flagSrc }: DestinationCardProps) {
     return (
         <>
             {/* Destination Card - interactive card with hover effects and scroll reveal animation */}
@@ -19,7 +23,14 @@ export default function DestinationCard({ country, delay, isVisible, className, 
             
             {/* Card Header - Country name and country code badge */}
             <div className="flex items-start justify-between gap-3">
-                <div>
+                <div className="flex items-center gap-3">
+                    <div className="relative h-12 w-12 overflow-hidden rounded-2xl border border-cyan-200/35 bg-white/10 shadow-inner shadow-blue-950/20">
+                        {flagSrc ? (
+                            <Image src={flagSrc} alt={`${country} flag`} fill className="object-contain p-1" sizes="48px" />
+                        ) : (
+                            <span className="flex h-full w-full items-center justify-center text-2xl" aria-hidden="true">🌐</span>
+                        )}
+                    </div>
                     <h3 className="text-xl font-black tracking-tight text-white">{country}</h3>
                 </div>
                 {/* Country code badge - conditionally rendered */}
@@ -34,11 +45,15 @@ export default function DestinationCard({ country, delay, isVisible, className, 
             <div className="mt-6 flex items-center justify-between">
                 <p className="text-sm font-medium text-blue-100/80">Applications open for upcoming intakes</p>
                 {/* Arrow Icon Button - subtle hover animation */}
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-200/45 bg-white/10 text-cyan-100 transition-transform duration-300 group-hover:translate-x-0.5">
+                <Link
+                    href="/apply"
+                    aria-label={`Apply for ${country}`}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-200/45 bg-white/10 text-cyan-100 transition-transform duration-300 group-hover:translate-x-0.5"
+                >
                     <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
                     </svg>
-                </span>
+                </Link>
             </div>
             </article>
         </>

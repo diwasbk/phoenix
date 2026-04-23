@@ -7,22 +7,27 @@ const destinations = [
     {
         country: 'Japan',
         countryCode: 'JP',
+        flagSrc: '/japan-flag.jpg',
     },
     {
         country: 'UK',
         countryCode: 'UK',
+        flagSrc: '/united-kingdom-flag.jpg',
     },
     {
         country: 'Australia',
         countryCode: 'AU',
+        flagSrc: '/australia-flag.jpg',
     },
     {
         country: 'Korea',
         countryCode: 'KR',
+        flagSrc: '/south-korea-flag.jpg',
     },
     {
         country: 'USA',
         countryCode: 'US',
+        flagSrc: '/america-flag.jpg',
     },
 ];
 
@@ -155,6 +160,7 @@ export default function DestinationsSection() {
                             key={item.country}
                             country={item.country}
                             countryCode={item.countryCode}
+                            flagSrc={item.flagSrc}
                             className={item.country === 'USA' ? 'sm:col-span-2' : undefined}
                             delay={`${index * 120 + 100}ms`}
                             isVisible={isVisible}
