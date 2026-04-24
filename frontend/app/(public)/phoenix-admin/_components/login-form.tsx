@@ -1,7 +1,23 @@
 "use client";
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { loginSchema, loginType } from '../schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { MdEmail, MdPassword } from 'react-icons/md';
 
 export default function LoginPage() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting }
+    } = useForm<loginType>({
+        resolver: zodResolver(loginSchema)
+    });
+
+    const onSubmit = async (data: loginType) => {
+        console.log(data);
+    };
+
     return (
         <section className="relative min-h-screen overflow-hidden bg-slate-100 px-4 py-10 sm:px-6 lg:px-8">
             <div className="pointer-events-none absolute inset-0">
@@ -47,33 +63,47 @@ export default function LoginPage() {
                                 <h2 className="mt-3 text-3xl font-black text-slate-900">Login</h2>
                                 <p className="mt-2 text-sm leading-7 text-slate-600">Enter your credentials to open the Phoenix admin workspace.</p>
 
-                                <form className="mt-8 space-y-5">
-                                    <label className="block space-y-2">
-                                        <span className="text-sm font-semibold text-slate-700">Admin Email</span>
+                                <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+                                    {/* Email */}
+                                    <div className="space-y-3">
+                                        <label htmlFor="admin-email" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                                            <MdEmail size={14} className="text-blue-700" />
+                                            Email
+                                        </label>
                                         <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            placeholder="admin@phoenix.edu.np"
-                                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                            {...register("email")}
+                                            id="admin-email"
+                                            placeholder="hello@example.com"
+                                            className="w-full rounded-xl border border-slate-200 px-4 py-3.5 text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100"
                                         />
-                                    </label>
-
-                                    <label className="block space-y-2">
-                                        <span className="text-sm font-semibold text-slate-700">Password</span>
+                                        {errors.email && (
+                                            <p className="text-sm font-medium text-red-600">{errors.email?.message}</p>
+                                        )}
+                                    </div>
+                                    {/* Password */}
+                                    <div className="space-y-3">
+                                        <label htmlFor="admin-password" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+                                            <MdPassword size={14} className="text-blue-700" />
+                                            Password
+                                        </label>
                                         <input
+                                            {...register("password")}
+                                            id="admin-password"
                                             type="password"
-                                            name="password"
-                                            required
-                                            placeholder="Enter password"
-                                            className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition-all duration-300 placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                                            placeholder="••••••••••"
+                                            className="w-full rounded-xl border border-slate-200 px-4 py-3.5 text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100"
                                         />
-                                    </label>
+                                        {errors.password && (
+                                            <p className="text-sm font-medium text-red-600">{errors.password?.message}</p>
+                                        )}
+                                    </div>
+
                                     <button
                                         type="submit"
+                                        disabled={isSubmitting}
                                         className="inline-flex w-full items-center justify-center rounded-2xl bg-blue-700 px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:cursor-pointer"
                                     >
-                                        Login
+                                        {isSubmitting ? "Logging in..." : "Login"}
                                     </button>
                                 </form>
                             </div>
