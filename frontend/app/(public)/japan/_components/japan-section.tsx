@@ -6,13 +6,14 @@ export default function JapanSection() {
         <main className="overflow-hidden bg-white text-slate-900">
             <section className="relative overflow-hidden px-4 py-10 text-white sm:px-6 lg:px-8">
                 <Image
-                    src="/japanese-city.jpg"
+                    src="/images/japanese-city.jpg"
                     alt="Japan cityscape"
                     fill
                     sizes="100vw"
                     className="object-cover"
                     priority
                 />
+                
                 <div className="pointer-events-none absolute inset-0">
                     <div className="absolute inset-0 bg-linear-to-br from-blue-950/55 via-blue-900/35 to-blue-800/10"></div>
                     <div className="absolute -left-16 top-12 h-72 w-72 rounded-full bg-cyan-200/10 blur-3xl"></div>

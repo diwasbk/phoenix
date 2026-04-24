@@ -20,7 +20,7 @@ export default function CTASection() {
                         <div className="relative w-full">
                             <div className="relative overflow-hidden rounded-3xl bg-white shadow-xl shadow-blue-200/40">
                                 <Image
-                                    src="/graduation.png"
+                                    src="/images/graduation.png"
                                     alt="Graduating student celebrating academic success"
                                     width={900}
                                     height={1100}

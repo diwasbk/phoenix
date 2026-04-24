@@ -92,7 +92,7 @@ export default function HeroSection() {
                     {/* Right Side - Featured Image */}
                     <div className="relative w-full h-full px-2 sm:px-4 md:px-0 self-start lg:-mt-6 hero-image-float">
                         <Image
-                            src="/featured-image.webp"
+                            src="/images/featured-image.webp"
                             alt="Featured Image"
                             fill
                             sizes="100vw"

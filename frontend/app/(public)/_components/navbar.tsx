@@ -9,7 +9,7 @@ export default function NavBar() {
     const pathname = usePathname();
 
     const navItems = [
-        { label: 'Home', href: '/' },
+        { label: 'Home', href: '/home' },
         { label: 'About', href: '/about' },
         { label: 'Services', href: '/services' },
         { label: 'Study in Japan', href: '/japan' },

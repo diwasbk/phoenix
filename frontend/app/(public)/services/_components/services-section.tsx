@@ -61,7 +61,7 @@ export default function ServicesSection() {
             {/* Hero section */}
             <section className="relative overflow-hidden px-4 py-10 text-white sm:px-6 lg:px-8">
                 <Image
-                    src="/service.jpg"
+                    src="/images/service.jpg"
                     alt="Study abroad services hero"
                     fill
                     sizes="100vw"

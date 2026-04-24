@@ -8,31 +8,31 @@ const destinations = [
     {
         country: 'Japan',
         countryCode: 'JP',
-        flagSrc: '/japan-flag.jpg',
+        flagSrc: '/images/japan-flag.jpg',
         summary: 'Language schools, colleges, and universities with a clear and practical admission roadmap.',
     },
     {
         country: 'UK',
         countryCode: 'UK',
-        flagSrc: '/united-kingdom-flag.jpg',
+        flagSrc: '/images/united-kingdom-flag.jpg',
         summary: 'Support for foundation, undergraduate, and postgraduate study options in a trusted format.',
     },
     {
         country: 'Australia',
         countryCode: 'AU',
-        flagSrc: '/australia-flag.jpg',
+        flagSrc: '/images/australia-flag.jpg',
         summary: 'Flexible pathways for students looking for strong academics and a balanced lifestyle.',
     },
     {
         country: 'Korea',
         countryCode: 'KR',
-        flagSrc: '/south-korea-flag.jpg',
+        flagSrc: '/images/south-korea-flag.jpg',
         summary: 'A modern choice for students seeking quality education and a vibrant campus experience.',
     },
     {
         country: 'USA',
         countryCode: 'US',
-        flagSrc: '/america-flag.jpg',
+        flagSrc: '/images/america-flag.jpg',
         summary: 'Guidance for competitive universities, admissions planning, and long-term study goals.',
     },
 ];
