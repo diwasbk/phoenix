@@ -63,8 +63,8 @@ export default function InquiryFormSection() {
                                 Call us for urgent inquiries during office hours.
                             </p>
                             <div className="mt-4 space-y-2">
-                                <a href="tel:071537037" className="block text-lg font-black text-slate-800">071-537037</a>
-                                <a href="tel:9843113713" className="block text-lg font-black text-slate-800">9843113713</a>
+                                <a href="tel:071537037" className="block text-lg font-black text-slate-700">071-537037</a>
+                                <a href="tel:9843113713" className="block text-lg font-black text-slate-700">9843113713</a>
                             </div>
                         </article>
                     </aside>
