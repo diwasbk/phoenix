@@ -1,0 +1,46 @@
+import mongoose, { Schema } from "mongoose";
+import { inquiryType } from "../types/inquiry.types";
+
+const inquirySchema: Schema = new mongoose.Schema<inquiryType>({
+    fullName: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    academicLevel: {
+        type: String,
+        enum: (["+2 / High School", "Bachelor Completed", "Master Completed", "Other"]),
+        required: true
+    },
+    destination: {
+        type: String,
+        enum: (["Japan", "UK", "Australia", "Korea", "USA"]),
+        required: true
+    },
+    message: {
+        type: String,
+    },
+    agreeContact: {
+        type: Boolean,
+        required: true
+    }
+}, { timestamps: true });
+
+export interface IInquiry extends inquiryType, Document {
+    _id: mongoose.Types.ObjectId,
+    createdAt: Date;
+    updatedAt: Date;
+};
+
+export const inquiryModel = mongoose.model<IInquiry>("Inquiry", inquirySchema);
