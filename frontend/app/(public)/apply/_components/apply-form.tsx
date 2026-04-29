@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { applySchema, ApplyType } from "../schems";
+import { applySchema, applyType } from "../schems";
 
 const countryOptions = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 const languageOptions = ['English', 'Japanese', 'Korean', 'Others'];
@@ -20,11 +20,11 @@ export default function ApplyForm() {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
-    } = useForm<ApplyType>({
+    } = useForm<applyType>({
         resolver: zodResolver(applySchema),
     });
 
-    const onSubmit = async (data: ApplyType) => {
+    const onSubmit = async (data: applyType) => {
         console.log(data);
     };
 

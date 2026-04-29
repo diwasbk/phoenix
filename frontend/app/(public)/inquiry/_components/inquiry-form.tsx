@@ -1,7 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { inquirySchema, InquiryType } from "../schems";
+import { inquirySchema, inquiryType } from "../schema";
 
 const destinations = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 
@@ -10,11 +10,11 @@ export default function InquiryForm() {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
-    } = useForm<InquiryType>({
+    } = useForm<inquiryType>({
         resolver: zodResolver(inquirySchema),
     });
 
-    const onSubmit = async (data: InquiryType) => {
+    const onSubmit = async (data: inquiryType) => {
         console.log(data);
     };
 
