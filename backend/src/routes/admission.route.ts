@@ -10,5 +10,7 @@ const admissionController = new AdmissionController();
 
 admissionRouter.post("/apply", schemaValidateMiddleware(admissionSchema), admissionController.applyAdmission);
 admissionRouter.get("/all", jwtAuthMiddleware, authorizeAdminMiddleware, admissionController.getAllAdmission);
+admissionRouter.put("/update/:admissionId", jwtAuthMiddleware, authorizeAdminMiddleware, schemaValidateMiddleware(admissionSchema.partial()), admissionController.updateAdmissionDetailByID);
+admissionRouter.delete("/delete/:admissionId", jwtAuthMiddleware, authorizeAdminMiddleware, admissionController.deleteAdmissionByID);
 
 export default admissionRouter;
