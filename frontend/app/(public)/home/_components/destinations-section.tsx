@@ -65,7 +65,7 @@ export default function DestinationsSection() {
         <section
             ref={sectionRef}
             id="destinations"
-            className="relative overflow-hidden bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 py-12"
+            className="relative overflow-hidden bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 px-4 py-10 sm:px-6 lg:px-8"
         >
             {/* Background decorative elements - subtle gradient and blur effects */}
             <div className="pointer-events-none absolute inset-0">
@@ -75,7 +75,7 @@ export default function DestinationsSection() {
                 <div className="absolute inset-0 bg-linear-to-r from-blue-950/35 via-transparent to-blue-900/30"></div>
             </div>
 
-            <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8">
+            <div className="relative z-10 mx-auto grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
                 {/* Left Content - Sticky heading and infographic section */}
                 <div
                     className={`self-start lg:sticky lg:top-24 transition-all duration-700 motion-safe:transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}

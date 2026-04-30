@@ -5,7 +5,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-linear-to-br from-slate-900 via-blue-900 to-blue-950 text-white relative overflow-hidden">
+        <footer className="bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 text-white relative overflow-hidden px-4 py-10 sm:px-6 lg:px-8">
             {/* Background decorative elements - subtle gradient and blur effects */}
             <div className="pointer-events-none absolute inset-0">
                 <div className="absolute -left-32 bottom-20 h-80 w-80 rounded-full bg-cyan-300/12 blur-3xl"></div>
@@ -13,7 +13,7 @@ export default function Footer() {
                 <div className="absolute inset-0 bg-linear-to-r from-blue-950/40 via-transparent to-blue-900/35"></div>
             </div>
 
-            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+            <div className="relative z-10 mx-auto">
                 {/* Main Footer Content Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                     {/* Branding Section */}
@@ -181,18 +181,17 @@ export default function Footer() {
 
                 {/* Bottom Section - Credits and Copyright - Centered */}
                 <div className="flex justify-center items-center">
-                    <p className="text-sm text-blue-100/70 text-center">
+                    <p className="text-sm text-blue-100/90 text-center">
                         &copy; {currentYear} Butwal Phoenix Education Hub Pvt.Ltd. All rights reserved. |{' '}
                         Designed and developed by{' '}
-                        <span className="text-cyan-200">
-                            <a
-                                href="https://github.com/diwasbk"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Diwas Bk
-                            </a>
-                        </span>
+                        <a
+                            href="https://codevajra.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-semibold underline underline-offset-4 decoration-cyan-200/40 transition-colors duration-300 hover:text-white hover:decoration-cyan-200/70"
+                        >
+                            CodeVajra
+                        </a>
                     </p>
                 </div>
             </div>

@@ -8,7 +8,7 @@ export default function BlogSection() {
                     <div className="absolute inset-0 bg-linear-to-r from-blue-950/35 via-transparent to-blue-900/25"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="max-w-3xl opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Blog</p>
                         <h1 className="mt-3 text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
@@ -27,7 +27,7 @@ export default function BlogSection() {
                     <div className="absolute right-8 bottom-8 h-44 w-44 rounded-full bg-blue-100/50 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[1fr_0.85fr] lg:items-stretch">
+                <div className="relative z-10 mx-auto grid grid-cols-1 gap-6 lg:grid-cols-[1fr_0.85fr] lg:items-stretch">
                     <article className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 p-7 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">Coming Soon</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">

@@ -75,7 +75,7 @@ export default function DestinationsSection() {
                     <div className="absolute inset-0 bg-linear-to-r from-blue-950/35 via-transparent to-blue-900/25"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                         <div className="opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Destinations</p>
@@ -142,7 +142,7 @@ export default function DestinationsSection() {
                     <div className="absolute right-0 top-32 h-48 w-48 rounded-full bg-blue-100/50 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="max-w-3xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Country Selection</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
@@ -172,7 +172,7 @@ export default function DestinationsSection() {
             </section>
 
             <section className="px-4 pb-14 sm:px-6 lg:px-8">
-                <div className="mx-auto max-w-7xl rounded-4xl border border-blue-100 bg-linear-to-r from-blue-50 via-white to-cyan-50 px-6 py-8 shadow-lg shadow-blue-100/40">
+                <div className="mx-auto rounded-4xl border border-blue-100 bg-linear-to-r from-blue-50 via-white to-cyan-50 px-6 py-8 shadow-lg shadow-blue-100/40">
                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_auto] lg:items-center">
                         <div>
                             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-700">Next Step</p>

@@ -20,7 +20,7 @@ export default function JapanSection() {
                     <div className="absolute -right-20 bottom-8 h-80 w-80 rounded-full bg-blue-100/10 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Study In Japan</p>
                         <h1 className="mt-3 text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
@@ -50,7 +50,7 @@ export default function JapanSection() {
 
             {/* Study in Japan highlight */}
             <section className="bg-slate-50 px-4 py-10 sm:px-6 lg:px-8">
-                <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
+                <div className="mx-auto grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-center">
                     <div className="opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Study In Japan</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">

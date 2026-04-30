@@ -11,7 +11,7 @@ export default function ApplyFormSection() {
                     <div className="absolute inset-0 bg-linear-to-r from-blue-950/35 via-transparent to-blue-900/25"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
                         <div className="opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Apply</p>
@@ -32,7 +32,7 @@ export default function ApplyFormSection() {
                     <div className="absolute right-8 bottom-8 h-44 w-44 rounded-full bg-blue-100/50 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <article className="overflow-hidden rounded-4xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 shadow-2xl shadow-blue-100/50">
                         <div className="border-b border-blue-100 bg-white px-5 py-4 sm:px-6">
                             <div className="flex flex-wrap items-center justify-between gap-3">

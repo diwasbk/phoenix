@@ -11,7 +11,7 @@ export default function InquiryFormSection() {
                     <div className="absolute inset-0 bg-linear-to-r from-blue-950/35 via-transparent to-blue-900/25"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Inquiry</p>
                     <h1 className="mt-3 max-w-4xl text-4xl font-black leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                         Inquiry Form for Study Abroad Counseling
@@ -28,7 +28,7 @@ export default function InquiryFormSection() {
                     <div className="absolute right-8 bottom-8 h-44 w-44 rounded-full bg-blue-100/60 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[1.3fr_0.7fr]">
+                <div className="relative z-10 mx-auto grid grid-cols-1 gap-6 lg:grid-cols-[1.3fr_0.7fr]">
                     <article className="rounded-3xl border border-blue-100 bg-white p-6 shadow-lg shadow-blue-100/50 sm:p-7">
                         <h2 className="text-2xl font-black tracking-tight text-slate-900">Student Inquiry Form</h2>
                         <p className="mt-2 text-sm leading-7 text-slate-600">

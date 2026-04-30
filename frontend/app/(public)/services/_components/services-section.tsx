@@ -74,7 +74,7 @@ export default function ServicesSection() {
                     <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-blue-100/10 blur-3xl animate-pulse"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
                         <div className="opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">Services</p>
@@ -130,7 +130,7 @@ export default function ServicesSection() {
                     <div className="absolute right-8 bottom-8 h-44 w-44 rounded-full bg-blue-100/60 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="max-w-3xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Service Infographic</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">
@@ -204,7 +204,7 @@ export default function ServicesSection() {
                     <div className="absolute left-0 top-0 h-64 w-64 rounded-full bg-cyan-200/40 blur-3xl"></div>
                     <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-blue-200/40 blur-3xl"></div>
                 </div>
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto">
                     <div className="relative z-10 grid grid-cols-1 gap-6 lg:grid-cols-[0.95fr_1.45fr]">
                         <article className="flex h-full flex-col rounded-3xl bg-linear-to-br from-blue-900 via-blue-900 to-cyan-700 p-7 text-white shadow-xl shadow-blue-900/30 opacity-0 animate-[revealUp_0.75s_ease-out_forwards] sm:p-8">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">What We Offer</p>

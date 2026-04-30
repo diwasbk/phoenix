@@ -74,13 +74,13 @@ export default function JourneySection() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative overflow-hidden bg-white py-6">
+        <section ref={sectionRef} className="relative overflow-hidden bg-white px-4 py-10 sm:px-6 lg:px-8">
             <div className="pointer-events-none absolute inset-0">
                 <div className="absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-blue-100/60 blur-3xl"></div>
                 <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-sky-100/70 blur-3xl"></div>
             </div>
 
-            <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="relative z-10 mx-auto">
                 <div
                     className={`mx-auto max-w-2xl text-center motion-safe:transform motion-safe:transition-all motion-safe:duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
                 >

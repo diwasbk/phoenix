@@ -37,13 +37,6 @@ const coreValues = [
     },
 ];
 
-const studentJourneyFlow = [
-    { stage: 'Profile Review', value: '100%', widthClass: 'w-full' },
-    { stage: 'University Match', value: '92%', widthClass: 'w-[92%]' },
-    { stage: 'Application Ready', value: '85%', widthClass: 'w-[85%]' },
-    { stage: 'Visa Approved', value: '78%', widthClass: 'w-[78%]' },
-];
-
 export default function AboutSection() {
     const [currentSlide, setCurrentSlide] = useState(0);
     const activeValue = coreValues[currentSlide] ?? coreValues[0];
@@ -57,7 +50,7 @@ export default function AboutSection() {
                     <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-blue-100/10 blur-3xl animate-pulse"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl">
+                <div className="relative z-10 mx-auto">
                     <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
                         <div className="opacity-0 animate-[revealUp_0.8s_ease-out_forwards]">
                             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-200">About Us</p>
@@ -106,13 +99,13 @@ export default function AboutSection() {
                 </div>
             </section>
 
-            <section className="relative px-4 pb-10 sm:px-6 lg:px-8">
+            <section className="relative px-4 py-10 sm:px-6 lg:px-8">
                 {/* Mission and vision section */}
                 <div className="pointer-events-none absolute inset-0">
                     <div className="absolute left-1/2 top-0 h-56 w-56 -translate-x-1/2 rounded-full bg-blue-100/50 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-6 md:grid-cols-2">
+                <div className="relative z-10 mx-auto grid grid-cols-1 gap-6 md:grid-cols-2">
                     <article className="rounded-3xl border border-blue-100 bg-linear-to-b from-white to-blue-50/70 p-7 shadow-lg shadow-blue-100/50 opacity-0 animate-[revealUp_0.7s_ease-out_forwards] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                         <p className="text-sm font-semibold uppercase tracking-[0.15em] text-blue-700">Our Mission</p>
                         <h2 className="mt-3 text-2xl font-black tracking-tight text-slate-900">Accessible Global Education</h2>
@@ -131,14 +124,14 @@ export default function AboutSection() {
                 </div>
             </section>
 
-            <section className="relative mb-12 px-4 sm:px-6 lg:px-8">
+            <section className="relative px-4 py-10 sm:px-6 lg:px-8">
                 {/* Core values section */}
                 <div className="pointer-events-none absolute inset-0">
                     <div className="absolute left-0 top-8 h-40 w-40 rounded-full bg-cyan-100/50 blur-3xl"></div>
                     <div className="absolute right-0 top-20 h-44 w-44 rounded-full bg-blue-100/50 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-6xl">
+                <div className="relative z-10 mx-auto">
                     <div className="max-w-3xl opacity-0 animate-[revealUp_0.7s_ease-out_forwards]">
                         <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">What Defines Us</p>
                         <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">

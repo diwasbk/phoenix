@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function HeroSection() {
     const headlineText = 'Study Abroad at Your Dream University';
@@ -42,14 +43,14 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section id="home" className="bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 text-white relative overflow-hidden">
+        <section id="home" className="bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 text-white relative overflow-hidden px-4 py-10 sm:px-6 lg:px-8">
             {/* Background decorative elements - subtle and professional */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-40 right-0 w-80 h-80 bg-blue-100 rounded-full blur-3xl opacity-10"></div>
                 <div className="absolute -bottom-20 left-0 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-10"></div>
             </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-10 w-full">
+            <div className="relative z-10 mx-auto w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Content */}
                     <div className=" lg:pr-6">
@@ -79,18 +80,22 @@ export default function HeroSection() {
                         </p>
 
                         {/* CTA Buttons */}
-                        <div className="hero-reveal hero-delay-2 flex flex-col sm:flex-row gap-4">
-                            <button className="cta-attention cta-entry cta-entry-1 bg-white text-blue-950 px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-blue-900 transition-all duration-200 shadow-xl shadow-blue-950/25 flex items-center justify-center gap-2 hover:cursor-pointer">
+                        <div className="hero-reveal hero-delay-2 flex flex-col sm:flex-row gap-4 pt-5">
+                            <Link
+                                href={"/apply"}
+                                className="cta-attention cta-entry cta-entry-1 bg-white text-blue-950 px-8 py-3.5 rounded-full font-semibold text-base hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-blue-900 transition-all duration-200 shadow-xl shadow-blue-950/25 flex items-center justify-center gap-2 hover:cursor-pointer">
                                 Apply Now
-                            </button>
-                            <button className="cta-entry cta-entry-2 border border-white/25 bg-white/5 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-white/10 hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-blue-900 transition-all duration-200 backdrop-blur-md hover:cursor-pointer">
+                            </Link>
+                            <Link
+                                href={"/inquiry"}
+                                className="cta-entry cta-entry-2 border border-white/25 bg-white/5 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-white/10 hover:border-white/40 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-blue-900 transition-all duration-200 backdrop-blur-md hover:cursor-pointer">
                                 Send Inquiry
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Right Side - Featured Image */}
-                    <div className="relative w-full h-full px-2 sm:px-4 md:px-0 self-start lg:-mt-6 hero-image-float">
+                    <div className="relative h-72 w-full self-start px-2 sm:mt-12 sm:h-96 sm:px-4 md:mt-0 md:px-0 lg:-mt-6 lg:h-130 hero-image-float">
                         <Image
                             src="/images/featured-image.webp"
                             alt="Featured Image"
@@ -106,7 +111,7 @@ export default function HeroSection() {
             </div>
 
             {/* Support chips */}
-            <div className="hero-reveal hero-delay-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pb-10 m-3">
+            <div className="hero-reveal hero-delay-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 pt-14 pb-10">
                 <div className="support-card-entry support-card-delay-1 relative overflow-hidden rounded-2xl border border-blue-200/30 bg-linear-to-br from-blue-300/20 via-blue-200/10 to-white/10 px-5 py-4 shadow-xl shadow-blue-950/30 backdrop-blur-md">
                     <div className="absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-blue-100/15"></div>
                     <p className="text-3xl md:text-4xl font-black text-white">10K+</p>

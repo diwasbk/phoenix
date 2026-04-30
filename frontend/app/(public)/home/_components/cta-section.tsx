@@ -6,14 +6,14 @@ export default function CTASection() {
     return (
         <>
             {/* Call To Action Section - prominent conversion focused section */}
-            <section className="relative overflow-hidden bg-white text-gray-900">
+            <section className="relative overflow-hidden bg-white text-gray-900 px-4 py-10 sm:px-6 lg:px-8">
                 {/* Background decorative elements - subtle and professional */}
                 <div className="pointer-events-none absolute inset-0">
                     <div className="absolute right-0 top-1/2 h-96 w-96 rounded-full bg-blue-100/30 blur-3xl"></div>
                     <div className="absolute -bottom-20 left-0 h-80 w-80 rounded-full bg-cyan-100/20 blur-3xl"></div>
                 </div>
 
-                <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+                <div className="relative z-10 mx-auto">
                     {/* Main Content Container */}
                     <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
                         {/* Left Side - Graduation visual */}
@@ -79,19 +79,19 @@ export default function CTASection() {
                             <div className="mt-3 flex flex-col gap-4 sm:flex-row">
                                 {/* Primary CTA Button */}
                                 <Link
-                                    href="/apply"
-                                    className="inline-flex items-center justify-center rounded-full bg-blue-50 px-8 py-4 text-base font-semibold text-blue-900 shadow-xl shadow-blue-800/40 transition-all duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-white"
+                                    href={"/apply"}
+                                    className="group inline-flex w-full items-center justify-center rounded-full bg-linear-to-r from-blue-700 to-cyan-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-blue-950/15 transition-all duration-300 hover:-translate-y-0.5 hover:from-blue-800 hover:to-cyan-600 hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-cyan-300 focus:ring-offset-2 focus:ring-offset-white sm:w-auto"
                                 >
                                     Start Your Application
-                                    <svg className="ml-2 h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                                    <svg className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
                                     </svg>
                                 </Link>
 
                                 {/* Secondary CTA Button */}
                                 <Link
-                                    href="/inquiry"
-                                    className="inline-flex items-center justify-center rounded-full border border-blue-950/30 bg-blue-950/5 px-8 py-4 text-base font-semibold text-blue-950 transition-all duration-300 hover:-translate-y-0.5 hover:cursor-pointer hover:border-blue-950/50 hover:bg-blue-950/10 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-white"
+                                    href={"/inquiry"}
+                                    className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-8 py-4 text-base font-semibold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:ring-offset-2 focus:ring-offset-white sm:w-auto"
                                 >
                                     Schedule a Consultation
                                 </Link>
