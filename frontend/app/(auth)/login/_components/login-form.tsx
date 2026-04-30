@@ -4,8 +4,14 @@ import { useForm } from 'react-hook-form';
 import { loginSchema, loginType } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MdEmail, MdPassword } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { handleLogin } from '@/app/lib/actions/auth-actions';
 
 export default function LoginPage() {
+    const router = useRouter();
+    const [err, setError] = useState("");
+
     const {
         register,
         handleSubmit,
@@ -15,7 +21,18 @@ export default function LoginPage() {
     });
 
     const onSubmit = async (data: loginType) => {
-        console.log(data);
+        try {
+            const res = await handleLogin(data);
+
+            if (!res.success) {
+                throw new Error(res.message || "Login failed!");
+            };
+
+            router.push("/dashboard");
+
+        } catch (err: any) {
+            setError(err.message || "Login failed!");
+        };
     };
 
     return (
@@ -64,6 +81,10 @@ export default function LoginPage() {
                                 <p className="mt-2 text-sm leading-7 text-slate-600">Enter your credentials to open the Phoenix admin workspace.</p>
 
                                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+                                    {/* Server Error */}
+                                    {err && (
+                                        <div className="bg-red-300 p-2 rounded-[10px] text-xs text-red-600 mt-2">{err}</div>
+                                    )}
                                     {/* Email */}
                                     <div className="space-y-3">
                                         <label htmlFor="admin-email" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
