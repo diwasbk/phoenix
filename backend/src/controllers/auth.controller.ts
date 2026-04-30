@@ -91,8 +91,8 @@ class AuthController {
                 message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
                 success: true
             });
-        }
-    }
+        };
+    };
 };
 
 export default AuthController;

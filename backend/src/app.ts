@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import { CLIENT_URL } from "./config/config";
 import authRouter from "./routes/auth.route";
+import admissionRouter from "./routes/admission.route";
 
 const app: Application = express();
 
@@ -14,5 +15,6 @@ app.use(cors({
 }));
 
 app.use("/api/auth", authRouter);
+app.use("/api/admission", admissionRouter);
 
 export default app;
