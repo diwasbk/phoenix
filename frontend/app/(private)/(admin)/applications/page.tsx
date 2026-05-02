@@ -1,5 +1,5 @@
 import AdminNavbar from "../_components/admin-navbar";
-import ApplicationTable from "../applications/_components/application-table";
+import ApplicationTable from "./_components/application-table";
 
 export default function Page() {
     return (

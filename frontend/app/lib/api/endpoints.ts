@@ -2,16 +2,18 @@ const API = {
     AUTH: {
         LOGIN: '/auth/login'
     },
-    ADMISSION: {
-        APPLY: '/admission/apply',
-        GET_ALL: '/admission/all',
-        UPDATE_BY_ID: (admissionId: string) => `/admission/update/${admissionId}`,
-        DELETE_BY_ID: (admissionId: string) => `/admission/delete/${admissionId}`
+    APPLICATION: {
+        SUBMIT: '/application/submit',
+        GET_ALL: '/application/all',
+        GET_BY_ID: (applicationId: string) => `/application/${applicationId}`,
+        UPDATE_BY_ID: (applicationId: string) => `/application/update/${applicationId}`,
+        DELETE_BY_ID: (applicationId: string) => `/application/delete/${applicationId}`
     },
     INQUIRY: {
-        SEND: "/inquiry/submit",
-        GET_ALL: "/inquiry/all"
-    }
+        SEND: "/inquiry/send",
+        GET_ALL: "/inquiry/all",
+        DELETE_BY_ID: (inquiryId: string) => `/inquiry/delete/${inquiryId}`
+    },
 };
 
 export default API;
