@@ -51,6 +51,34 @@ class InquiryController {
             });
         };
     };
+
+    // Delete Inquiry By ID
+    deleteInquiryByID = async (req: Request, res: Response) => {
+        try {
+            const inquiryExist = await inquiryModel.findOne({ _id: req.params.inquiryId });
+
+            if (!inquiryExist) {
+                return res.status(404).send({
+                    message: "Inquiry not found!",
+                    success: false
+                });
+            };
+
+            await inquiryModel.findOneAndDelete({ _id: req.params.inquiryId });
+
+            res.status(200).send({
+                message: "Inquiry details deleted successfully!",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
 };
 
 export default InquiryController;

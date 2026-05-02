@@ -18,7 +18,7 @@ export const inquirySchema = z.object({
         .string("Address is required.")
         .nonempty("Address is required.")
         .min(3, "Address must be at least 3 characters."),
-    academicLevel: z.enum(["+2 / High School", "Bachelor Completed", "Master Completed", "Other"], {
+    academicLevel: z.enum(["+2 / High School", "Bachelor Completed", "Master Completed", "Others"], {
         message: "Please select your academic level."
     }),
     destination: z.enum(["Japan", "UK", "Australia", "Korea", "USA"], {

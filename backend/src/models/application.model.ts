@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
-import { admissionType } from "../types/admission.types";
+import { applicationType } from "../types/application.types";
 
-const admissionSchema: Schema = new mongoose.Schema<admissionType>({
+const applicationSchema: Schema = new mongoose.Schema<applicationType>({
     fullName: {
         type: String,
         required: true
@@ -53,17 +53,17 @@ const admissionSchema: Schema = new mongoose.Schema<admissionType>({
     },
     foreignLanguage: {
         type: String,
-        enum: (["English", "Japanese", "Korean", "Other"]),
+        enum: (["English", "Japanese", "Korean", "Others"]),
         required: true
     },
     testPreparation: {
         type: String,
-        enum: (["IELTS", "SAT", "JLPT/NAT", "Others"]),
+        enum: (["IELTS", "SAT", "JLPT / NAT", "Others"]),
         required: true
     },
     otherService: {
         type: String,
-        enum: (["Translation", "Documentation Guidance", "College/University Placement", "Visa Application / Interview Preparation", "Others"]),
+        enum: (["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Others"]),
         default: "N/A"
     },
     preferredCountry: {
@@ -82,10 +82,10 @@ const admissionSchema: Schema = new mongoose.Schema<admissionType>({
     }
 }, { timestamps: true });
 
-export interface IAdmission extends admissionType, Document {
+export interface IApplication extends applicationType, Document {
     _id: mongoose.Types.ObjectId,
     createdAt: Date;
     updatedAt: Date;
 };
 
-export const admissionModel = mongoose.model<IAdmission>("Admission", admissionSchema);
+export const applicationModel = mongoose.model<IApplication>("Application", applicationSchema);

@@ -18,7 +18,7 @@ interface tokenPayload {
 
 // Generate Token
 const generateToken = (payload: tokenPayload) => {
-    return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: 3000 });
+    return jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: 60 * 60 }); // Token valid for 1 hour
 };
 
 // Verify Token

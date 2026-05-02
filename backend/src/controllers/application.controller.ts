@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { admissionModel } from "../models/admission.model";
+import { applicationModel } from "../models/application.model";
 import { ageCalculator } from "../services/common";
 
-class AdmissionController {
-    // Apply Admission
-    applyAdmission = async (req: Request, res: Response) => {
+class ApplicationController {
+    // Submit Application
+    aubmitApplication = async (req: Request, res: Response) => {
         try {
             const { fullName, email, phoneNumber, address, gender, dob, fatherName, motherName, parentPhone, responsiblePerson, responsiblePhone, foreignLanguage, testPreparation, otherService, preferredCountry, referralSource, termsAgreed } = req.body;
 
             const calculatedAge = ageCalculator(dob);
 
-            const result = await admissionModel.create({
+            const result = await applicationModel.create({
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -32,7 +32,7 @@ class AdmissionController {
             });
 
             res.status(201).send({
-                message: "Admission submitted successfully!",
+                message: "Application submitted successfully!",
                 result: result,
                 success: true
             });
@@ -46,13 +46,13 @@ class AdmissionController {
         };
     };
 
-    // Get All Admission
-    getAllAdmission = async (req: Request, res: Response) => {
+    // Get All Applications
+    getAllApplications = async (req: Request, res: Response) => {
         try {
-            const result = await admissionModel.find();
+            const result = await applicationModel.find();
 
             res.status(200).send({
-                message: result.length ? "Admissions fetched successfully!" : "Admissions not found!",
+                message: result.length ? "Applications fetched successfully!" : "applications not found!",
                 result: result,
                 success: true
             });
@@ -66,14 +66,41 @@ class AdmissionController {
         };
     };
 
-    // Update Admission Detail By ID
-    updateAdmissionDetailByID = async (req: Request, res: Response) => {
+    // Get Application By ID
+    getApplicationByID = async (req: Request, res: Response) => {
         try {
-            const admissionExist = await admissionModel.findOne({ _id: req.params.admissionId });
+            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
 
-            if (!admissionExist) {
+            if (!applicationExist) {
                 return res.status(404).send({
-                    message: "Admission not found!",
+                    message: "Application not found!",
+                    success: false
+                });
+            };
+
+            res.status(200).send({
+                message: "Application fetched successfully!",
+                result: applicationExist,
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
+
+    // Update Application Detail By ID
+    updateApplicationDetailByID = async (req: Request, res: Response) => {
+        try {
+            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
+
+            if (!applicationExist) {
+                return res.status(404).send({
+                    message: "Application not found!",
                     success: false
                 });
             };
@@ -82,8 +109,8 @@ class AdmissionController {
 
             const calculatedAge = ageCalculator(dob);
 
-            await admissionModel.findOneAndUpdate(
-                { _id: req.params.admissionId },
+            await applicationModel.findOneAndUpdate(
+                { _id: req.params.applicationId },
                 {
                     $set: {
                         fullName: fullName,
@@ -108,7 +135,7 @@ class AdmissionController {
             );
 
             res.status(200).send({
-                message: "Admission details updated successfully!",
+                message: "Application details updated successfully!",
                 success: true
             });
 
@@ -121,22 +148,22 @@ class AdmissionController {
         };
     };
 
-    // Delete Admission By ID
-    deleteAdmissionByID = async (req: Request, res: Response) => {
+    // Delete application By ID
+    deleteApplicationByID = async (req: Request, res: Response) => {
         try {
-            const admissionExist = await admissionModel.findOne({ _id: req.params.admissionId });
+            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
 
-            if (!admissionExist) {
+            if (!applicationExist) {
                 return res.status(404).send({
-                    message: "Admission not found!",
+                    message: "Application not found!",
                     success: false
                 });
             };
 
-            await admissionModel.findOneAndDelete({ _id: req.params.admissionId });
+            await applicationModel.findOneAndDelete({ _id: req.params.applicationId });
 
             res.status(200).send({
-                message: "Admission details deleted successfully!",
+                message: "Application details deleted successfully!",
                 success: true
             });
 
@@ -150,4 +177,4 @@ class AdmissionController {
     };
 };
 
-export default AdmissionController;
+export default ApplicationController;

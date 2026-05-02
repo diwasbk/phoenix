@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const admissionSchema = z.object({
+export const applicationSchema = z.object({
     fullName: z
         .string("Full name is required.")
         .nonempty("Full name is required.")
@@ -46,15 +46,15 @@ export const admissionSchema = z.object({
         .string()
         .optional(),
     foreignLanguage: z
-        .enum(["English", "Japanese", "Korean", "Other"], {
+        .enum(["English", "Japanese", "Korean", "Others"], {
             message: "Please select a preferred foreign language."
         }),
     testPreparation: z
-        .enum(["IELTS", "SAT", "JLPT/NAT", "Others"], {
+        .enum(["IELTS", "SAT", "JLPT / NAT", "Others"], {
             message: "Please select a test preparation option."
         }),
     otherService: z
-        .enum(["Translation", "Documentation Guidance", "College/University Placement", "Visa Application/Interview Preparation", "Others"])
+        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Others"])
         .optional(),
     preferredCountry: z
         .enum(["Japan", "UK", "Australia", "Korea", "USA", "Others"], {
@@ -69,4 +69,4 @@ export const admissionSchema = z.object({
         .refine((val) => val === true, "You must agree to the rules and regulations.")
 });
 
-export type admissionType = z.infer<typeof admissionSchema>;
+export type applicationType = z.infer<typeof applicationSchema>;

@@ -20,7 +20,7 @@ const inquirySchema: Schema = new mongoose.Schema<inquiryType>({
     },
     academicLevel: {
         type: String,
-        enum: (["+2 / High School", "Bachelor Completed", "Master Completed", "Other"]),
+        enum: (["+2 / High School", "Bachelor Completed", "Master Completed", "Others"]),
         required: true
     },
     destination: {

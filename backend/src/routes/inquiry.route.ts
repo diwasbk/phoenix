@@ -10,5 +10,6 @@ const inquiryController = new InquiryController();
 
 inquiryRoute.post("/send", schemaValidateMiddleware(inquirySchema), inquiryController.sendInquiry);
 inquiryRoute.get("/all", jwtAuthMiddleware, authorizeAdminMiddleware, inquiryController.getAllInquiries);
+inquiryRoute.delete("/delete/:inquiryId", jwtAuthMiddleware, authorizeAdminMiddleware, inquiryController.deleteInquiryByID);
 
 export default inquiryRoute;
