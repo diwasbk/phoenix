@@ -1,7 +1,7 @@
 "use client";
-import ApplyForm from './apply-form';
+import ApplicationForm from './application-form';
 
-export default function ApplyFormSection() {
+export default function ApplicationFormSection() {
     return (
         <main className="overflow-hidden bg-white text-slate-900">
             <section className="relative overflow-hidden bg-linear-to-br from-blue-950 via-blue-900 to-blue-800 px-4 py-10 text-white sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@ export default function ApplyFormSection() {
                                 </div>
                             </div>
                         </div>
-                        <ApplyForm />
+                        <ApplicationForm />
                     </article>
                 </div>
             </section>

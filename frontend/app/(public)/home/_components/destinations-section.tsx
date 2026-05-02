@@ -7,27 +7,27 @@ const destinations = [
     {
         country: 'Japan',
         countryCode: 'JP',
-        flagSrc: '/japan-flag.jpg',
+        flagSrc: '/images/japan-flag.jpg',
     },
     {
         country: 'UK',
         countryCode: 'UK',
-        flagSrc: '/united-kingdom-flag.jpg',
+        flagSrc: '/images/united-kingdom-flag.jpg',
     },
     {
         country: 'Australia',
         countryCode: 'AU',
-        flagSrc: '/australia-flag.jpg',
+        flagSrc: '/images/australia-flag.jpg',
     },
     {
         country: 'Korea',
         countryCode: 'KR',
-        flagSrc: '/south-korea-flag.jpg',
+        flagSrc: '/images/south-korea-flag.jpg',
     },
     {
         country: 'USA',
         countryCode: 'US',
-        flagSrc: '/america-flag.jpg',
+        flagSrc: '/images/america-flag.jpg',
     },
 ];
 

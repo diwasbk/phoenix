@@ -1,12 +1,12 @@
 import Footer from "../_components/footer";
 import NavBar from "../_components/navbar";
-import ApplyFormSection from "./_components/apply-form-section";
+import ApplicationFormSection from "./_components/application-form-section";
 
 export default function Page() {
     return (
         <div>
             <NavBar />
-            <ApplyFormSection />
+            <ApplicationFormSection />
             <Footer />
         </div>
     );

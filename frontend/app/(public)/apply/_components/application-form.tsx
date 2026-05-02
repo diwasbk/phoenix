@@ -1,35 +1,52 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { applySchema, applyType } from "../schems";
+import { applicationSchema, applicationType } from "../schema";
+import { handleSubmitApplication } from "@/app/lib/actions/application-actions";
+import { useState } from "react";
 
 const countryOptions = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 const languageOptions = ['English', 'Japanese', 'Korean', 'Others'];
 const serviceOptions = [
     'Translation',
     'Documentation Guidance',
-    'College/University Placement',
+    'College / University Placement',
     'Visa Application / Interview Preparation',
     'Others',
 ];
 
 const sourceOptions = ['Newspaper', 'Board', 'Friends', 'Radio', 'Websites', 'Relatives', 'TV', 'Facebook', 'Others'];
 
-export default function ApplyForm() {
+export default function ApplicationForm() {
+    const [err, setError] = useState("");
+
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting }
-    } = useForm<applyType>({
-        resolver: zodResolver(applySchema),
+    } = useForm<applicationType>({
+        resolver: zodResolver(applicationSchema),
     });
 
-    const onSubmit = async (data: applyType) => {
-        console.log(data);
+    const onSubmit = async (data: applicationType) => {
+        try {
+            const res = await handleSubmitApplication(data);
+
+            if (!res.success) {
+                throw new Error(res.message || "Failed to submit application!");
+            };
+
+        } catch (err: any) {
+            setError(err.message || "Failed to submit application!");
+        };
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-5 sm:p-6">
+            {/* Server Error */}
+            {err && (
+                <div className="bg-red-300 p-2 rounded-[10px] text-xs text-red-600 mt-2">{err}</div>
+            )}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <label className="space-y-2">
                     <span className="text-sm font-semibold text-slate-700">Name *</span>
@@ -42,7 +59,6 @@ export default function ApplyForm() {
                     <span className="text-sm font-semibold text-slate-700">Email *</span>
                     <input
                         {...register("email")}
-                        type="email"
                         className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-100" placeholder="you@example.com" />
                     {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
                 </label>
@@ -161,7 +177,7 @@ export default function ApplyForm() {
                     <div>
                         <h3 className="text-base font-black text-slate-900">Test Preparation</h3>
                         <div className="mt-3 space-y-3 text-sm text-slate-700">
-                            {['IELTS', 'SAT', 'JLPT/NAT', 'Others'].map((item) => (
+                            {['IELTS', 'SAT', 'JLPT / NAT', 'Others'].map((item) => (
                                 <label key={item} className="flex items-center gap-3">
                                     <input
                                         {...register("testPreparation")}
@@ -267,7 +283,7 @@ export default function ApplyForm() {
                             type="submit"
                             disabled={isSubmitting}
                             className="inline-flex items-center justify-center rounded-full bg-blue-700 px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70">
-                            {isSubmitting ? "Submitting..." : "Submit Admission Form"}
+                            {isSubmitting ? "Submitting..." : "Submit Application Form"}
                         </button>
                     </div>
                 </div>

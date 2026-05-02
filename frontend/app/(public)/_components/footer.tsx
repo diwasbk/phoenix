@@ -25,25 +25,47 @@ export default function Footer() {
 
                         {/* Contact Information */}
                         <div className="space-y-3 mt-6">
-                            {/* Phone Number */}
-                            <div className="flex items-start gap-3">
-                                <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                </svg>
-                                <a href="tel:+1234567890" className="text-sm text-blue-100/85 hover:text-cyan-200 transition-colors duration-300">
-                                    071-537037<br></br>
-                                    9843113713
-                                </a>
+                            {/* Butwal Office */}
+                            <div className="border-blue-700 mt-3">
+                                <p className="text-xs font-semibold uppercase tracking-widest text-cyan-200 mb-2">Butwal Office</p>
+                                <div className="flex items-start gap-3">
+                                    <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <div className="text-sm text-blue-100/85">
+                                        <p>Traffic Chowk, Butwal</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 mt-2">
+                                    <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                    <a href="tel:014167610" className="text-sm text-blue-100/85 hover:text-cyan-200 transition-colors duration-300">
+                                        071-537037 / 9843113713
+                                    </a>
+                                </div>
                             </div>
 
-                            {/* Address */}
-                            <div className="flex items-start gap-3">
-                                <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <div className="text-sm text-blue-100/85">
-                                    <p>Traffic Chowk, Butwal</p>
+                            {/* Head Office */}
+                            <div className="border-t border-blue-700 pt-3 mt-3">
+                                <p className="text-xs font-semibold uppercase tracking-widest text-cyan-200 mb-2">Head Office</p>
+                                <div className="flex items-start gap-3">
+                                    <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <div className="text-sm text-blue-100/85">
+                                        <p>Bagbazar, Kathmandu</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-3 mt-2">
+                                    <svg className="h-5 w-5 text-cyan-300 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                    <a href="tel:014167610" className="text-sm text-blue-100/85 hover:text-cyan-200 transition-colors duration-300">
+                                        01-4167610 / 9704666371
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -93,6 +115,11 @@ export default function Footer() {
                             <li>
                                 <Link href="/inquiry" className="text-sm text-blue-100/85 hover:text-cyan-200 transition-colors duration-300">
                                     Inquiry
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/apply" className="text-sm text-blue-100/85 hover:text-cyan-200 transition-colors duration-300">
+                                    Apply
                                 </Link>
                             </li>
                             <li>

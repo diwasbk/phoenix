@@ -31,7 +31,7 @@ export default function NavBar() {
                         <div className="shrink-0 group cursor-pointer">
                             <Link href={"/"}>
                                 <Image
-                                    src="/logo.jpg"
+                                    src="/images/logo.jpg"
                                     alt="Phoenix logo"
                                     width={112}
                                     height={56}

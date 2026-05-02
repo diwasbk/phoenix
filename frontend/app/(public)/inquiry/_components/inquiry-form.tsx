@@ -2,10 +2,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { inquirySchema, inquiryType } from "../schema";
+import { handleSendInquiry } from "@/app/lib/actions/inquiry-actions";
+import { useState } from "react";
 
 const destinations = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 
 export default function InquiryForm() {
+    const [err, setError] = useState("");
+
     const {
         register,
         handleSubmit,
@@ -15,7 +19,18 @@ export default function InquiryForm() {
     });
 
     const onSubmit = async (data: inquiryType) => {
-        console.log(data);
+        try {
+            const res = await handleSendInquiry(data);
+
+            console.log(res);
+
+            if (!res.success) {
+                throw new Error(res.message || "Failed to submit inquiry");
+            };
+
+        } catch (err: any) {
+            setError(err.message || "Failed to submit application!");
+        };
     };
 
     return (

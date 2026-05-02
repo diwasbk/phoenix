@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const applySchema = z.object({
+export const applicationSchema = z.object({
     fullName: z
         .string()
         .nonempty("Full name is required.")
@@ -19,7 +19,7 @@ export const applySchema = z.object({
         .nonempty("Address is required.")
         .min(3, "Address must be at least 3 chatacters."),
     gender: z
-        .enum(["Male", "Female", "Others"], { message: "Gender is required." }),
+        .enum(["Male", "Female", "Other"], { message: "Gender is required." }),
     dob: z
         .string("Date of birth is required.")
         .nonempty("Date of birth is required."),
@@ -47,17 +47,17 @@ export const applySchema = z.object({
             message: "Please select a preferred foreign language."
         }),
     testPreparation: z
-        .enum(["IELTS", "SAT", "JLPT/NAT", "Others"], {
+        .enum(["IELTS", "SAT", "JLPT / NAT", "Other"], {
             message: "Please select a test preparation option."
         }),
     otherService: z
-        .enum(["Translation", "Documentation Guidance", "College/University Placement", "Visa Application / Interview Preparation", "Others"]).optional(),
+        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Other"]).optional(),
     preferredCountry: z
-        .enum(["Japan", "UK", "Australia", "Korea", "USA", "Others"], {
+        .enum(["Japan", "UK", "Australia", "Korea", "USA", "Other"], {
             message: "Preferred country is required."
         }),
     referralSource: z
-        .enum(["Newspaper", "Board", "Friends", "Radio", "Websites", "Relatives", "TV", "Facebook", "Others"], {
+        .enum(["Newspaper", "Board", "Friends", "Radio", "Websites", "Relatives", "TV", "Facebook", "Other"], {
             message: "Please select how you heard about us."
         }),
     termsAgreed: z
@@ -65,4 +65,4 @@ export const applySchema = z.object({
         .refine((val) => val === true, "You must agree to the rules and regulations.")
 });
 
-export type applyType = z.infer<typeof applySchema>;
+export type applicationType = z.infer<typeof applicationSchema>;

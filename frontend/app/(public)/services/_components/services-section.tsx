@@ -64,7 +64,7 @@ export default function ServicesSection() {
                     src="/images/service.jpg"
                     alt="Study abroad services hero"
                     fill
-                    sizes="100vw"
+                    sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) calc(100vw - 3rem), calc(100vw - 4rem)"
                     className="object-cover"
                     priority
                 />
