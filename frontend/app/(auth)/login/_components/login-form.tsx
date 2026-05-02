@@ -81,10 +81,12 @@ export default function LoginPage() {
                                 <p className="mt-2 text-sm leading-7 text-slate-600">Enter your credentials to open the Phoenix admin workspace.</p>
 
                                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
-                                    {/* Server Error */}
-                                    {err && (
-                                        <div className="bg-red-300 p-2 rounded-[10px] text-xs text-red-600 mt-2">{err}</div>
-                                    )}
+                                    <div className="max-w-3xl mx-auto">
+                                        {/* Server Error */}
+                                        {err && (
+                                            <div className="p-3 bg-rose-300 text-sm font-semibold text-red-500 mt-5 rounded-4xl">{err}</div>
+                                        )}
+                                    </div>
                                     {/* Email */}
                                     <div className="space-y-3">
                                         <label htmlFor="admin-email" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
