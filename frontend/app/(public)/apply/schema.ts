@@ -43,21 +43,21 @@ export const applicationSchema = z.object({
         .string()
         .optional(),
     foreignLanguage: z
-        .enum(["English", "Japanese", "Korean", "Other"], {
+        .enum(["English", "Japanese", "Korean", "Others"], {
             message: "Please select a preferred foreign language."
         }),
     testPreparation: z
-        .enum(["IELTS", "SAT", "JLPT / NAT", "Other"], {
+        .enum(["IELTS", "SAT", "JLPT / NAT", "Others"], {
             message: "Please select a test preparation option."
         }),
     otherService: z
-        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Other"]).optional(),
+        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Others"]).optional(),
     preferredCountry: z
-        .enum(["Japan", "UK", "Australia", "Korea", "USA", "Other"], {
+        .enum(["Japan", "UK", "Australia", "Korea", "USA", "Others"], {
             message: "Preferred country is required."
         }),
     referralSource: z
-        .enum(["Newspaper", "Board", "Friends", "Radio", "Websites", "Relatives", "TV", "Facebook", "Other"], {
+        .enum(["Newspaper", "Board", "Friends", "Radio", "Websites", "Relatives", "TV", "Facebook", "Others"], {
             message: "Please select how you heard about us."
         }),
     termsAgreed: z

@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { applicationSchema, applicationType } from "../schema";
 import { handleSubmitApplication } from "@/app/lib/actions/application-actions";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 const countryOptions = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 const languageOptions = ['English', 'Japanese', 'Korean', 'Others'];
@@ -18,11 +18,10 @@ const serviceOptions = [
 const sourceOptions = ['Newspaper', 'Board', 'Friends', 'Radio', 'Websites', 'Relatives', 'TV', 'Facebook', 'Others'];
 
 export default function ApplicationForm() {
-    const [err, setError] = useState("");
-
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors, isSubmitting }
     } = useForm<applicationType>({
         resolver: zodResolver(applicationSchema),
@@ -36,17 +35,16 @@ export default function ApplicationForm() {
                 throw new Error(res.message || "Failed to submit application!");
             };
 
+            toast.success(res.message || "Application submitted successfully!");
+            reset();
+
         } catch (err: any) {
-            setError(err.message || "Failed to submit application!");
+            toast.error(err.message || "Failed to submit application!");
         };
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-5 sm:p-6">
-            {/* Server Error */}
-            {err && (
-                <div className="bg-red-300 p-2 rounded-[10px] text-xs text-red-600 mt-2">{err}</div>
-            )}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <label className="space-y-2">
                     <span className="text-sm font-semibold text-slate-700">Name *</span>
@@ -282,7 +280,9 @@ export default function ApplicationForm() {
                         <button
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-flex items-center justify-center rounded-full bg-blue-700 px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70">
+                            className={`inline-flex items-center justify-center bg-blue-700 text-white text-sm py-2.5 px-7 rounded-full font-bold  transition-all duration-300 shadow-xl shadow-blue-100 transition-all
+                                ${isSubmitting ? "opacity-60" : "hover:bg-blue-800 hover:-translate-y-0.5 cursor-pointer"}`}
+                        >
                             {isSubmitting ? "Submitting..." : "Submit Application Form"}
                         </button>
                     </div>

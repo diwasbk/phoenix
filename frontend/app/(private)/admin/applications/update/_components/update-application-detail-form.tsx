@@ -5,6 +5,7 @@ import { handleGetApplicationByID, handleSubmitApplication, handleUpdateApplicat
 import { useEffect, useState } from "react";
 import { applicationSchema, applicationType } from "@/app/(public)/apply/schema";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const countryOptions = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 const languageOptions = ['English', 'Japanese', 'Korean', 'Other'];
@@ -20,7 +21,6 @@ const sourceOptions = ['Newspaper', 'Board', 'Friends', 'Radio', 'Websites', 'Re
 
 export default function ApplicationForm({ applicationId }: { applicationId: string }) {
     const router = useRouter();
-    const [err, setError] = useState("");
     const [applicationDetail, setApplicationDetail] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
@@ -65,7 +65,7 @@ export default function ApplicationForm({ applicationId }: { applicationId: stri
                 })
 
             } catch (err: any) {
-                throw Error(err.message || "Failed to fetch profile!");
+                toast.error(err.message || "Failed to fetch profile!");
 
             } finally {
                 setLoading(false);
@@ -83,21 +83,17 @@ export default function ApplicationForm({ applicationId }: { applicationId: stri
                 throw new Error(res.message || "Failed to update application!");
             };
 
-            // router.refresh(); // Revalidate cached data on the server
+            toast.success(res.message || "Application updated successfully!");
 
-            router.push(`/applications/${applicationId}`);
+            router.push(`/admin/applications/${applicationId}`);
 
         } catch (err: any) {
-            setError(err.message || "Failed to update application!");
+            toast.error(err.message || "Failed to update application!");
         };
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 p-5 sm:p-6">
-            {/* Server Error */}
-            {err && (
-                <div className="bg-red-300 p-2 rounded-[10px] text-xs text-red-600 mt-2">{err}</div>
-            )}
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <label className="space-y-2">
                     <span className="text-sm font-semibold text-slate-700">Name *</span>

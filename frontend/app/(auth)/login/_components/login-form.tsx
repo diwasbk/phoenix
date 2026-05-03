@@ -5,12 +5,11 @@ import { loginSchema, loginType } from '../schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MdEmail, MdPassword } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { handleLogin } from '@/app/lib/actions/auth-actions';
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
     const router = useRouter();
-    const [err, setError] = useState("");
 
     const {
         register,
@@ -28,10 +27,12 @@ export default function LoginPage() {
                 throw new Error(res.message || "Login failed!");
             };
 
-            router.push("/dashboard");
+            toast.success(res.message || "Login successful!");
+
+            router.push("/admin/dashboard");
 
         } catch (err: any) {
-            setError(err.message || "Login failed!");
+            toast.error(err.message || "Login failed!");
         };
     };
 
@@ -81,12 +82,6 @@ export default function LoginPage() {
                                 <p className="mt-2 text-sm leading-7 text-slate-600">Enter your credentials to open the Phoenix admin workspace.</p>
 
                                 <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
-                                    <div className="max-w-3xl mx-auto">
-                                        {/* Server Error */}
-                                        {err && (
-                                            <div className="p-3 bg-rose-300 text-sm font-semibold text-red-500 mt-5 rounded-4xl">{err}</div>
-                                        )}
-                                    </div>
                                     {/* Email */}
                                     <div className="space-y-3">
                                         <label htmlFor="admin-email" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
@@ -124,7 +119,8 @@ export default function LoginPage() {
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="inline-flex w-full items-center justify-center rounded-2xl bg-blue-700 px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:cursor-pointer"
+                                        className={`w-full items-center justify-center bg-blue-700 text-white text-sm py-2.5 px-7 rounded-full font-bold shadow-xl shadow-blue-100
+                                            ${isSubmitting ? "opacity-60" : "hover:bg-blue-800 cursor-pointer"}`}
                                     >
                                         {isSubmitting ? "Logging in..." : "Login"}
                                     </button>

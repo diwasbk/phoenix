@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { Eye, Trash2, Search } from "lucide-react";
 import { handleDeleteInquiryByID, handleGetAllInquiries } from "@/app/lib/actions/inquiry-actions";
+import { toast } from "react-toastify";
 
 const AVATAR_COLORS = [
     "bg-blue-100 text-blue-700",
@@ -34,7 +35,6 @@ function formatDate(dateStr: string) {
 export default function InquiryTable() {
     const [inquiries, setInquiries] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
-    const [err, setError] = useState("");
     const [query, setQuery] = useState("");
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [inquiryToDelete, setInquiryToDelete] = useState<string | null>(null);
@@ -43,8 +43,6 @@ export default function InquiryTable() {
 
     useEffect(() => {
         const fetchInquiries = async () => {
-            setError("");
-
             try {
                 const res = await handleGetAllInquiries();
 
@@ -52,11 +50,11 @@ export default function InquiryTable() {
                     setInquiries(res.result);
 
                 } else {
-                    throw new Error(res.message || "Failed to fetch inquiries!");
+                    toast.error(res.message || "Failed to fetch inquiries!");
                 };
 
             } catch (err: any) {
-                setError(err.message || "Failed to fetch inquiries!");
+                toast.error(err.message || "Failed to fetch inquiries!");
 
             } finally {
                 setLoading(false);
@@ -86,7 +84,8 @@ export default function InquiryTable() {
             const res = await handleDeleteInquiryByID(inquiryId);
 
             if (res.success) {
-                //   Remove the deleted inquiry from the list
+                toast.success(res.message || "Inquiry deleted successfully!");
+                // Remove the deleted inquiry from the list
                 setInquiries(inquiries.filter((inq) => inq._id !== inquiryId));
                 setConfirmDelete(false);
                 setInquiryToDelete(null);
@@ -96,7 +95,7 @@ export default function InquiryTable() {
             };
 
         } catch (err: any) {
-            setError(err.message || "Failed to delete inquiry!");
+            toast.error(err.message || "Failed to delete inquiry!");
             setConfirmDelete(false);
             setInquiryToDelete(null);
         };
@@ -280,14 +279,6 @@ export default function InquiryTable() {
                         <div className="p-3 bg-blue-50 border border-blue-300 text-sm font-semibold text-blue-500 mt-5 rounded-4xl"> Loading inquiries...</div>
                     )}
                 </div>
-
-                <div className="max-w-3xl mx-auto">
-                    {/* Server Error */}
-                    {err && (
-                        <div className="p-3 bg-rose-300 text-sm font-semibold text-red-500 mt-5 rounded-4xl">{err}</div>
-                    )}
-                </div>
-
                 {/* Empty State */}
                 {filtered.length === 0 && (
                     <div className="py-20 text-center">

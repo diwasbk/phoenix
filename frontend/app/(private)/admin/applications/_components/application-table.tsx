@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, Pencil, Trash2, Search } from "lucide-react";
 import { handleDeleteApplicationByID, handleGetAllApplication } from "@/app/lib/actions/application-actions";
+import { toast } from "react-toastify";
 
 const AVATAR_COLORS = [
   "bg-blue-100 text-blue-700",
@@ -35,15 +36,12 @@ function formatDate(dateStr: string) {
 export default function ApplicationTable() {
   const [applications, setapplications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [err, setError] = useState("");
   const [query, setQuery] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchApplication = async () => {
-      setError("");
-
       try {
         const res = await handleGetAllApplication();
 
@@ -55,7 +53,7 @@ export default function ApplicationTable() {
         };
 
       } catch (err: any) {
-        setError(err.message || "Failed to fetch applications!");
+        toast.error(err.message || "Failed to fetch applications!");
 
       } finally {
         setLoading(false);
@@ -85,6 +83,7 @@ export default function ApplicationTable() {
       const res = await handleDeleteApplicationByID(applicationId);
 
       if (res.success) {
+        toast.success(res.message || "Application deleted successfully!");
         // Remove the deleted application from the list
         setapplications(applications.filter((app) => app._id !== applicationId));
         setConfirmDelete(false);
@@ -95,7 +94,7 @@ export default function ApplicationTable() {
       };
 
     } catch (err: any) {
-      setError(err.message || "Failed to delete application!");
+      toast.error(err.message || "Failed to delete application!");
       setConfirmDelete(false);
       setApplicationToDelete(null);
     };
@@ -242,14 +241,14 @@ export default function ApplicationTable() {
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <Link
-                        href={`/applications/${application._id}`}
+                        href={`/admin/applications/${application._id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-4xl border border-slate-200 text-gray-100 bg-blue-500 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors hover:cursor-pointer"
                       >
                         <Eye className="w-4 h-4" />
                       </Link>
 
                       <Link
-                        href={`/applications/update/${application._id}`}
+                        href={`/admin/applications/update/${application._id}`}
                         className="w-10 h-10 flex items-center justify-center rounded-4xl border border-slate-200 text-gray-100 bg-green-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200 transition-colors hover:cursor-pointer">
                         <Pencil className="w-4 h-4" />
                       </Link>
@@ -275,10 +274,6 @@ export default function ApplicationTable() {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          {/* Server Error */}
-          {err && (
-            <div className="p-3 bg-rose-300 text-sm font-semibold text-red-500 mt-5 rounded-4xl">{err}</div>
-          )}
         </div>
 
         {/* Empty State */}

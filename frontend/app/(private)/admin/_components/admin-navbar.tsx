@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AdminNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,10 +14,12 @@ export default function AdminNavbar() {
         try {
             await clearAuthTokenCookie();
 
+            toast.success("Logged out successfully!");
+            
             router.replace("/login");
 
         } catch (err: any) {
-            console.error("Logout Error:", err);
+            toast.error("Logout Error:", err);
         }
     }
     return (
@@ -29,7 +32,7 @@ export default function AdminNavbar() {
                 <div className="mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 items-center justify-between">
                         <div className="shrink-0 group cursor-pointer">
-                            <Link href={"/dashboard"}>
+                            <Link href={"/admin/dashboard"}>
                                 <Image
                                     src="/images/logo.jpg"
                                     alt="Phoenix logo"
@@ -44,13 +47,13 @@ export default function AdminNavbar() {
                         <div className="hidden md:flex items-center gap-2">
                             <div className="hidden md:flex gap-3">
                                 <Link
-                                    href={"/applications"}
+                                    href={"/admin/applications"}
                                     className="border-2 border-blue-300 text-blue-400 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-400 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
                                     Applications
                                 </Link>
 
                                 <Link
-                                    href={"/inquiries"}
+                                    href={"/admin/inquiries"}
                                     className="border-2 border-blue-300 text-blue-400 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-400 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
                                     Inquiries
                                 </Link>
@@ -92,14 +95,14 @@ export default function AdminNavbar() {
                         <div className="md:hidden border-t border-gray-200/50 bg-white animate-slide-down">
                             <div className="space-y-2 px-2 pt-2 pb-4">
                                 <Link
-                                    href="/applications"
+                                    href="/admin/applications"
                                     className="block rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-gray-700 transition-all duration-300 hover:translate-x-2 hover:bg-blue-50 hover:text-blue-600"
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     Applications
                                 </Link>
                                 <Link
-                                    href="/inquiries"
+                                    href="/admin/inquiries"
                                     className="block rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-gray-700 transition-all duration-300 hover:translate-x-2 hover:bg-blue-50 hover:text-blue-600"
                                     onClick={() => setIsMenuOpen(false)}
                                 >

@@ -3,16 +3,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { inquirySchema, inquiryType } from "../schema";
 import { handleSendInquiry } from "@/app/lib/actions/inquiry-actions";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 const destinations = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 
 export default function InquiryForm() {
-    const [err, setError] = useState("");
-
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors, isSubmitting }
     } = useForm<inquiryType>({
         resolver: zodResolver(inquirySchema),
@@ -22,14 +21,15 @@ export default function InquiryForm() {
         try {
             const res = await handleSendInquiry(data);
 
-            console.log(res);
-
             if (!res.success) {
                 throw new Error(res.message || "Failed to submit inquiry");
             };
 
+            toast.success(res.message || "Inquiry submitted successfully!");
+            reset();
+
         } catch (err: any) {
-            setError(err.message || "Failed to submit application!");
+            toast.error(err.message || "Failed to submit application!");
         };
     };
 
@@ -90,7 +90,7 @@ export default function InquiryForm() {
                         <option>+2 / High School</option>
                         <option>Bachelor Completed</option>
                         <option>Master Completed</option>
-                        <option>Other</option>
+                        <option>Others</option>
                     </select>
                     {errors.academicLevel && <p className="text-sm text-red-600">{errors.academicLevel.message}</p>}
                 </label>
@@ -132,9 +132,10 @@ export default function InquiryForm() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex items-center justify-center rounded-full bg-blue-700 px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-800 hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70"
+                    className={`inline-flex items-center justify-center bg-blue-700 text-white text-sm py-2.5 px-7 rounded-full font-bold  transition-all duration-300 shadow-xl shadow-blue-100
+                        ${isSubmitting ? "opacity-60" : "hover:bg-blue-800 hover:-translate-y-0.5 cursor-pointer"}`}
                 >
-                    {isSubmitting ? "Submitting..." : "Submit Inquiry"}
+                    {isSubmitting ? "Sending..." : "Send Inquiry"}
                 </button>
             </div>
         </form>

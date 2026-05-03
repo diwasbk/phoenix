@@ -32,7 +32,7 @@ export default function Page() {
                     <ArrowBigLeft className="w-4 h-4" />
                 </button>
                 <Link
-                    href={`/applications/update/${applicationId}`}
+                    href={`/admin/applications/update/${applicationId}`}
                     className="no-print fixed top-24 right-4 z-40 p-3 w-10 h-10 rounded-4xl border border-blue-800 text-gray-100 bg-green-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200 transition-colors hover:cursor-pointer"
                     title="Edit application"
                 >
