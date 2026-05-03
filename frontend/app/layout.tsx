@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,7 +49,7 @@ export default function RootLayout({
           className="fixed left-0 right-0 top-0 z-50 bg-linear-to-br from-blue-950 via-blue-900 to-blue-800"
           style={{ height: "env(safe-area-inset-top)" }}
         />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
