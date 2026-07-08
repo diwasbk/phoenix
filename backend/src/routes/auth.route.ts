@@ -11,5 +11,6 @@ authRouter.post("/signup", schemaValidateMiddleware(signupSchema), authControlle
 authRouter.post("/login", schemaValidateMiddleware(loginSchema), authController.loginUser);
 authRouter.patch("/change-password", jwtAuthMiddleware, schemaValidateMiddleware(changePasswordSchema), authController.changePassword);
 authRouter.post("/request-password-reset-email", schemaValidateMiddleware(requestPasswordResetEmailSchema), authController.requestPasswordResetEmail);
+authRouter.patch("/reset-account-password", schemaValidateMiddleware(resetPasswordSchema), authController.resetAccountPassword);
 
 export default authRouter;
