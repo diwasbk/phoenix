@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Environment
 .env
@@ -18,3 +17,6 @@ build/
 *.swo
 *.swn
 .DS_Store
+
+#CERTS
+certs/

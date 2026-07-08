@@ -76,7 +76,7 @@ class AuthController {
                 httpOnly: true,
                 maxAge: 3000 * 1000,
                 sameSite: "lax",
-                secure: false
+                secure: true
             });
 
 
