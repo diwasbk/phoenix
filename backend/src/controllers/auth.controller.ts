@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import { UserModel } from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
+import jwt from  "jsonwebtoken";
+import { CLIENT_URL, JWT_SECRET_KEY } from "../config/config";
+import { sendEmail } from "../services/email";
+import { generatePasswordResetEmail } from "../templates/email.templates";
 
 class AuthController {
     // Signup User
@@ -144,6 +148,38 @@ class AuthController {
             console.log(err);
             res.status(500).send({
                 message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
+
+    // Request Password Reset Email
+    requestPasswordResetEmail = async (req: Request, res: Response) => {
+        try {
+            const userExist = await UserModel.findOne({ email: req.body.email });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "Something went wrong! Please try again later!",
+                    success: false
+                });
+            };
+
+            const token = jwt.sign({ email: userExist.email }, JWT_SECRET_KEY, { expiresIn: "5m" })
+
+            const resetUrl = `${CLIENT_URL}/reset-password?token=${token}`;
+
+            await sendEmail(userExist.email, "Reset Your Password", generatePasswordResetEmail(userExist, resetUrl));
+
+            res.status(200).send({
+                message: "Password reset email send successfully!",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error.",
                 success: false
             });
         };

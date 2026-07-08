@@ -10,5 +10,6 @@ const authController = new AuthController();
 authRouter.post("/signup", schemaValidateMiddleware(signupSchema), authController.signupUser);
 authRouter.post("/login", schemaValidateMiddleware(loginSchema), authController.loginUser);
 authRouter.patch("/change-password", jwtAuthMiddleware, schemaValidateMiddleware(changePasswordSchema), authController.changePassword);
+authRouter.post("/request-password-reset-email", schemaValidateMiddleware(requestPasswordResetEmailSchema), authController.requestPasswordResetEmail);
 
 export default authRouter;
