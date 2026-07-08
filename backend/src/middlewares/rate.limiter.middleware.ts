@@ -16,7 +16,7 @@ export const apiLimiterMiddleware = rateLimit({
 
 export const authLimiterMiddleware = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 20,
+    max: 15,
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { userModel } from "../models/user.model";
+import { UserModel } from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
 
@@ -7,9 +7,9 @@ class AuthController {
     // Signup User
     signupUser = async (req: Request, res: Response) => {
         try {
-            const { email, password } = req.body;
+            const { fullName, email, password } = req.body;
 
-            const userExist = await userModel.findOne({ email: email });
+            const userExist = await UserModel.findOne({ email: email });
 
             if (userExist) {
                 return res.status(400).send({
@@ -22,7 +22,8 @@ class AuthController {
 
             const hash = await bcrypt.hash(password, salt);
 
-            await userModel.create({
+            await UserModel.create({
+                fullName: fullName,
                 email: email,
                 password: hash
             });
@@ -46,7 +47,7 @@ class AuthController {
         try {
             const { email, password } = req.body;
 
-            const userExist = await userModel.findOne({ email: email });
+            const userExist = await UserModel.findOne({ email: email });
 
             if (!userExist) {
                 return res.status(404).send({
@@ -90,6 +91,60 @@ class AuthController {
             res.status(500).send({
                 message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
                 success: true
+            });
+        };
+    };
+
+    // Change Password
+    changePassword = async (req: Request, res: Response) => {
+        try {
+            const { currentPassword, newPassword } = req.body;
+
+            const user = req.user as { id: string };
+
+            const userExist = await UserModel.findOne({ _id: user.id });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found!",
+                    success: false
+                });
+            };
+
+            const isPasswordMatch = await bcrypt.compare(currentPassword, userExist.password);
+
+            if (!isPasswordMatch) {
+                return res.status(401).send({
+                    message: "Current password do not match!",
+                    success: false
+                });
+            };
+
+            const salt = await bcrypt.genSalt(10);
+
+            const hash = await bcrypt.hash(newPassword, salt);
+
+            await UserModel.findOneAndUpdate(
+                { _id: user.id },
+                { $set: { password: hash } }
+            );
+
+            res.clearCookie("auth_token", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "strict"
+            });
+
+            res.status(200).send({
+                message: "Password changed successfully!",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
             });
         };
     };
