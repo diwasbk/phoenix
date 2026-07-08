@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UserModel } from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
-import jwt, { JwtPayload } from  "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { CLIENT_URL, JWT_SECRET_KEY } from "../config/config";
 import { sendEmail } from "../services/email";
 import { generatePasswordResetEmail, generatePasswordUpdatedEmail } from "../templates/email.templates";
@@ -229,6 +229,61 @@ class AuthController {
             console.log(err);
             res.status(500).send({
                 message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
+
+    // Delete User Account By ID
+    deleteUserAccountByUserId = async (req: Request, res: Response) => {
+        try {
+            const user = req.user as { id: string };
+
+            const userExist = await UserModel.findOne({ _id: req.params.userId });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found!",
+                    success: false
+                });
+            };
+
+            const authUser = await UserModel.findOne({ _id: user.id });
+
+            if (!authUser) {
+                return res.status(404).send({
+                    message: "Something went wrong! Please try again later.",
+                    success: false
+                });
+            };
+
+            if (authUser?.role === "admin" && authUser._id.toString() === req.params.userId) {
+                return res.status(403).send({
+                    message: "Admin cannot delete their own account!",
+                    success: false
+                });
+            };
+
+            const isPasswordMatch = await bcrypt.compare(req.body.password, authUser.password)
+
+            if (!isPasswordMatch) {
+                return res.status(401).send({
+                    message: "Password do not match!",
+                    success: false
+                });
+            };
+
+            await UserModel.findOneAndDelete({ _id: req.params.userId });
+
+            res.status(200).send({
+                message: "User account deleted successfully!",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
                 success: false
             });
         };
