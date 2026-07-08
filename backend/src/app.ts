@@ -5,7 +5,7 @@ import { CLIENT_URL } from "./config/config";
 import authRouter from "./routes/auth.route";
 import inquiryRoute from "./routes/inquiry.route";
 import applicationRouter from "./routes/application.route";
-import { apiLimiter, authLimiter } from "./middlewares/rate.limiter";
+import { apiLimiterMiddleware, authLimiterMiddleware } from "./middlewares/rate.limiter.middleware";
 
 const app: Application = express();
 
@@ -16,8 +16,8 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use("/api", apiLimiter);
-app.use("/api/auth", authLimiter, authRouter);
+app.use("/api", apiLimiterMiddleware);
+app.use("/api/auth", authLimiterMiddleware, authRouter);
 app.use("/api/inquiry", inquiryRoute);
 app.use("/api/application", applicationRouter);
 

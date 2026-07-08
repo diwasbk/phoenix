@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 
-export const apiLimiter = () => rateLimit({
+export const apiLimiterMiddleware = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100,
     standardHeaders: true,
@@ -14,9 +14,9 @@ export const apiLimiter = () => rateLimit({
     },
 });
 
-export const authLimiter = () => rateLimit({
+export const authLimiterMiddleware = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10,
+    max: 20,
     standardHeaders: true,
     legacyHeaders: false,
     handler: (req: Request, res: Response) => {

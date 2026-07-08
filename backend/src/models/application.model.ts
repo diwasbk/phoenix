@@ -88,4 +88,4 @@ export interface IApplication extends applicationType, Document {
     updatedAt: Date;
 };
 
-export const applicationModel = mongoose.model<IApplication>("Application", applicationSchema);
+export const ApplicationModel = mongoose.model<IApplication>("Application", applicationSchema);
