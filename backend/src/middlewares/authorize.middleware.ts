@@ -13,3 +13,17 @@ export const authorizeAdminMiddleware = (req: Request, res: Response, next: Next
 
     next();
 };
+
+// Owner Or Admin Middleware
+export const isOwnerOrAdminAuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user as { id: string, role: string };
+
+    if (user.role !== "admin" && user.id !== req.params.userId) {
+        return res.status(403).send({
+            message: "Forbidden: Access Denied!",
+            success: false
+        });
+    };
+
+    next();
+};

@@ -2,125 +2,119 @@
 import { clearAuthTokenCookie } from "@/app/lib/cookie";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AdminNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter();
+    const pathname = usePathname();
 
     const handleLogout = async () => {
         try {
             await clearAuthTokenCookie();
-
             toast.success("Logged out successfully!");
-            
             router.replace("/login");
-
         } catch (err: any) {
-            toast.error("Logout Error:", err);
+            toast.error("Logout failed");
         }
-    }
+    };
+
+    const navItems = [
+        { name: "Applications", href: "/admin/applications" },
+        { name: "Inquiries", href: "/admin/inquiries" },
+        { name: "Security", href: "/admin/change-password" },
+    ];
+
     return (
         <>
             <div aria-hidden className="h-20" />
             <nav
-                className="fixed left-0 right-0 z-50 animate-fade-in-down border-b border-gray-200 bg-white"
+                className="fixed left-0 right-0 top-0 z-50 border-b border-gray-200 bg-white shadow-sm"
                 style={{ top: "env(safe-area-inset-top)" }}
             >
-                <div className="mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 items-center justify-between">
-                        <div className="shrink-0 group cursor-pointer">
-                            <Link href={"/admin/dashboard"}>
-                                <Image
-                                    src="/images/logo.jpg"
-                                    alt="Phoenix logo"
-                                    width={112}
-                                    height={56}
-                                    className="h-full w-full object-contain"
-                                    priority
-                                />
-                            </Link>
-                        </div>
+                        {/* Logo */}
+                        <Link href="/admin/dashboard" className="shrink-0 transition-opacity hover:opacity-80">
+                            <Image
+                                src="/images/logo.jpg"
+                                alt="Phoenix logo"
+                                width={112}
+                                height={56}
+                                className="h-12 w-auto object-contain"
+                                priority
+                            />
+                        </Link>
 
+                        {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-2">
-                            <div className="hidden md:flex gap-3">
-                                <Link
-                                    href={"/admin/applications"}
-                                    className="border-2 border-blue-300 text-blue-400 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-400 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
-                                    Applications
-                                </Link>
+                            {navItems.map((item) => {
+                                const isActive = pathname === item.href;
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        className={`rounded-lg px-4 py-2 text-sm transition-colors ${isActive
+                                                ? "bg-blue-700 text-white"
+                                                : "text-gray-700 hover:bg-blue-700 hover:text-white"
+                                            }`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                );
+                            })}
 
-                                <Link
-                                    href={"/admin/inquiries"}
-                                    className="border-2 border-blue-300 text-blue-400 px-6 py-2.5 rounded-lg font-semibold text-sm hover:border-blue-400 hover:text-blue-500 transition-all duration-300 hover:cursor-pointer">
-                                    Inquiries
-                                </Link>
-                                <button
-                                    className="bg-red-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm hover:bg-red-700 transition-all duration-300 hover:shadow-lg hover:cursor-pointer"
-                                    onClick={handleLogout}
-                                >
-                                    Logout
-                                </button>
-                            </div>
+                            <button
+                                onClick={handleLogout}
+                                className="ml-4 rounded-lg bg-red-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-red-700 hover:shadow-md cursor-pointer"
+                            >
+                                Logout
+                            </button>
                         </div>
 
-                        <div className="md:hidden">
+                        {/* Mobile Menu Button */}
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="md:hidden rounded-lg p-2 text-gray-700 hover:bg-gray-100"
+                        >
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                {/* Mobile Dropdown */}
+                {isMenuOpen && (
+                    <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
+                        <div className="space-y-1 px-4 py-4">
+                            {navItems.map((item) => {
+                                const isActive = pathname === item.href;
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        className={`block rounded-lg px-4 py-3 text-base font-semibold ${isActive
+                                                ? "bg-blue-50 text-blue-700"
+                                                : "text-gray-700 hover:bg-gray-50"
+                                            }`}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                );
+                            })}
                             <button
-                                type="button"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="inline-flex items-center justify-center rounded-lg p-2 text-gray-700 transition-all duration-300 hover:bg-blue-100"
-                                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                                onClick={handleLogout}
+                                className="block w-full text-left rounded-lg px-4 py-3 text-base font-bold text-red-600 hover:bg-red-50"
                             >
-                                <svg
-                                    className="h-6 w-6 transition-transform duration-300"
-                                    style={{ transform: isMenuOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2.5}
-                                        d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                                    />
-                                </svg>
+                                Logout
                             </button>
                         </div>
                     </div>
-
-                    {isMenuOpen && (
-                        <div className="md:hidden border-t border-gray-200/50 bg-white animate-slide-down">
-                            <div className="space-y-2 px-2 pt-2 pb-4">
-                                <Link
-                                    href="/admin/applications"
-                                    className="block rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-gray-700 transition-all duration-300 hover:translate-x-2 hover:bg-blue-50 hover:text-blue-600"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Applications
-                                </Link>
-                                <Link
-                                    href="/admin/inquiries"
-                                    className="block rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-gray-700 transition-all duration-300 hover:translate-x-2 hover:bg-blue-50 hover:text-blue-600"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    Inquiry
-                                </Link>
-                                <button
-                                    onClick={async () => {
-                                        setIsMenuOpen(false);
-                                        await handleLogout();
-                                    }}
-                                    className="mt-4 block w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-center text-sm font-semibold uppercase tracking-wide text-slate-700 transition-all duration-300 hover:border-red-300 hover:text-red-700 hover:border-red-200 hover:bg-red-50"
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                )}
             </nav>
         </>
     );

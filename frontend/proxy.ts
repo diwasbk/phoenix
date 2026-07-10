@@ -5,7 +5,7 @@ import { JWT_SECRET_KEY } from "./app/lib/config/config";
 // Encode JWT secret key for verification
 const secret = new TextEncoder().encode(JWT_SECRET_KEY!);
 
-// Proxy function to protect routes
+// Middleware function to protect routes
 export const proxy = async (req: NextRequest) => {
     // Get auth token from cookies
     const token = req.cookies.get("auth_token")?.value;

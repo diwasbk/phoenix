@@ -1,12 +1,19 @@
 import express from "express";
 import AuthController from "../controllers/auth.controller";
 import schemaValidateMiddleware from "../middlewares/schema.validate.middleware";
-import { loginSchema, signupSchema } from "../types/auth.types";
+import { changePasswordSchema, loginSchema, requestPasswordResetEmailSchema, resetPasswordSchema, signupSchema } from "../types/auth.types";
+import { jwtAuthMiddleware } from "../utils/jwt";
+import { isOwnerOrAdminAuthMiddleware } from "../middlewares/authorize.middleware";
+import { csrfVerificationMiddleware } from "../middlewares/csrf.verification.middleware";
 
 const authRouter = express.Router();
 const authController = new AuthController();
 
 authRouter.post("/signup", schemaValidateMiddleware(signupSchema), authController.signupUser);
 authRouter.post("/login", schemaValidateMiddleware(loginSchema), authController.loginUser);
+authRouter.patch("/change-password", jwtAuthMiddleware, csrfVerificationMiddleware, schemaValidateMiddleware(changePasswordSchema), authController.changePassword);
+authRouter.post("/request-password-reset-email", schemaValidateMiddleware(requestPasswordResetEmailSchema), authController.requestPasswordResetEmail);
+authRouter.patch("/reset-account-password", schemaValidateMiddleware(resetPasswordSchema), authController.resetAccountPassword);
+authRouter.delete("/delete-account/:userId", jwtAuthMiddleware, isOwnerOrAdminAuthMiddleware, csrfVerificationMiddleware, schemaValidateMiddleware(loginSchema.pick({ password: true })), authController.deleteUserAccountByUserId)
 
 export default authRouter;

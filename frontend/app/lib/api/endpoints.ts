@@ -1,6 +1,10 @@
 const API = {
     AUTH: {
-        LOGIN: '/auth/login'
+        SIGN_UP: "/auth/signup",
+        LOGIN: '/auth/login',
+        CHANGE_PASSWORD: "/auth/change-password",
+        REQUEST_PASSWORD_RESET_EMAIL: "/auth/request-password-reset-email",
+        RESET_ACCOUNT_PASSWORD: "/auth/reset-account-password",
     },
     APPLICATION: {
         SUBMIT: '/application/submit',

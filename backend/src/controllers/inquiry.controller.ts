@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { inquiryModel } from "../models/inquiry.model";
+import { InquiryModel } from "../models/inquiry.model";
 
 class InquiryController {
     // Send Inquiry
@@ -7,7 +7,7 @@ class InquiryController {
         try {
             const { fullName, email, phoneNumber, address, academicLevel, destination, message, agreeContact } = req.body;
 
-            await inquiryModel.create({
+            await InquiryModel.create({
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -35,7 +35,7 @@ class InquiryController {
     // Get All Inquiries
     getAllInquiries = async (req: Request, res: Response) => {
         try {
-            const result = await inquiryModel.find();
+            const result = await InquiryModel.find();
 
             res.status(200).send({
                 message: "Inquiries fetched successfully.",
@@ -55,7 +55,7 @@ class InquiryController {
     // Delete Inquiry By ID
     deleteInquiryByID = async (req: Request, res: Response) => {
         try {
-            const inquiryExist = await inquiryModel.findOne({ _id: req.params.inquiryId });
+            const inquiryExist = await InquiryModel.findOne({ _id: req.params.inquiryId });
 
             if (!inquiryExist) {
                 return res.status(404).send({
@@ -64,7 +64,7 @@ class InquiryController {
                 });
             };
 
-            await inquiryModel.findOneAndDelete({ _id: req.params.inquiryId });
+            await InquiryModel.findOneAndDelete({ _id: req.params.inquiryId });
 
             res.status(200).send({
                 message: "Inquiry details deleted successfully!",

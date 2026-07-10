@@ -2,6 +2,10 @@ import mongoose, { Schema } from "mongoose";
 import { signupType } from "../types/auth.types";
 
 const userSchema: Schema = new mongoose.Schema<signupType>({
+    fullName: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
         required: true,
@@ -10,6 +14,14 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     password: {
         type: String,
         required: true
+    },
+    loginAttempts: {
+        type: Number,
+        default: 0,
+    },
+    lockUntil: {
+        type: Date,
+        default: null,
     },
     role: {
         type: String,
@@ -24,4 +36,4 @@ export interface IUser extends signupType, Document {
     updatedAt: Date;
 };
 
-export const userModel = mongoose.model<IUser>("User", userSchema);
+export const UserModel = mongoose.model<IUser>("User", userSchema);

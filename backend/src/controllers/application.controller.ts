@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { applicationModel } from "../models/application.model";
+import { ApplicationModel } from "../models/application.model";
 import { ageCalculator } from "../services/common";
 
 class ApplicationController {
@@ -10,7 +10,7 @@ class ApplicationController {
 
             const calculatedAge = ageCalculator(dob);
 
-            const result = await applicationModel.create({
+            const result = await ApplicationModel.create({
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -49,7 +49,7 @@ class ApplicationController {
     // Get All Applications
     getAllApplications = async (req: Request, res: Response) => {
         try {
-            const result = await applicationModel.find();
+            const result = await ApplicationModel.find();
 
             res.status(200).send({
                 message: result.length ? "Applications fetched successfully!" : "applications not found!",
@@ -69,7 +69,7 @@ class ApplicationController {
     // Get Application By ID
     getApplicationByID = async (req: Request, res: Response) => {
         try {
-            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
+            const applicationExist = await ApplicationModel.findOne({ _id: req.params.applicationId });
 
             if (!applicationExist) {
                 return res.status(404).send({
@@ -96,7 +96,7 @@ class ApplicationController {
     // Update Application Detail By ID
     updateApplicationDetailByID = async (req: Request, res: Response) => {
         try {
-            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
+            const applicationExist = await ApplicationModel.findOne({ _id: req.params.applicationId });
 
             if (!applicationExist) {
                 return res.status(404).send({
@@ -109,7 +109,7 @@ class ApplicationController {
 
             const calculatedAge = ageCalculator(dob);
 
-            await applicationModel.findOneAndUpdate(
+            await ApplicationModel.findOneAndUpdate(
                 { _id: req.params.applicationId },
                 {
                     $set: {
@@ -151,7 +151,7 @@ class ApplicationController {
     // Delete application By ID
     deleteApplicationByID = async (req: Request, res: Response) => {
         try {
-            const applicationExist = await applicationModel.findOne({ _id: req.params.applicationId });
+            const applicationExist = await ApplicationModel.findOne({ _id: req.params.applicationId });
 
             if (!applicationExist) {
                 return res.status(404).send({
@@ -160,7 +160,7 @@ class ApplicationController {
                 });
             };
 
-            await applicationModel.findOneAndDelete({ _id: req.params.applicationId });
+            await ApplicationModel.findOneAndDelete({ _id: req.params.applicationId });
 
             res.status(200).send({
                 message: "Application details deleted successfully!",
