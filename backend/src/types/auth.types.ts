@@ -2,6 +2,12 @@ import { z } from "zod";
 
 // Signup Schema
 export const signupSchema = z.object({
+    googleId: z
+        .string()
+        .optional(),
+    profilePicture: z
+        .string()
+        .optional(),
     fullName: z
         .string("Full name is required.")
         .nonempty("Full name is required.")
@@ -28,6 +34,9 @@ export const signupSchema = z.object({
         .coerce.date()
         .nullable()
         .default(null),
+    provider: z
+        .enum(["local", "google"])
+        .default("local"),
     role: z
         .enum(["admin", "user"])
         .default("user")

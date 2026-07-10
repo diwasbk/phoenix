@@ -2,6 +2,15 @@ import mongoose, { Schema } from "mongoose";
 import { signupType } from "../types/auth.types";
 
 const userSchema: Schema = new mongoose.Schema<signupType>({
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true,
+    },
+    profilePicture: {
+        type: String,
+        default: "",
+    },
     fullName: {
         type: String,
         required: true
@@ -22,6 +31,11 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     lockUntil: {
         type: Date,
         default: null,
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local",
     },
     role: {
         type: String,
