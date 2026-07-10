@@ -5,4 +5,5 @@ import { cookies } from "next/headers"
 export const clearAuthTokenCookie = async () => {
     const cookieStore = await cookies();
     cookieStore.delete("auth_token");
+    cookieStore.delete("csrf_token");
 };

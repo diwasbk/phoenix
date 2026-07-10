@@ -121,6 +121,14 @@ class AuthController {
                 secure: true
             });
 
+            const csrfToken = generateCsrfToken();
+
+            res.cookie("csrf_token", csrfToken, {
+                httpOnly: false,
+                secure: true,
+                sameSite: "lax"
+            });
+
             res.status(200).send({
                 message: "Logged in successfully!",
                 success: true

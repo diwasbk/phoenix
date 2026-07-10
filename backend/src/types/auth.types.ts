@@ -21,6 +21,13 @@ export const signupSchema = z.object({
     confirmPassword: z
         .string("Confirm password is required.")
         .nonempty("Confirm password is required."),
+    loginAttempts: z
+        .number()
+        .default(0),
+    lockUntil: z
+        .coerce.date()
+        .nullable()
+        .default(null),
     role: z
         .enum(["admin", "user"])
         .default("user")
