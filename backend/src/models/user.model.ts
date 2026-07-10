@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 import { signupType } from "../types/auth.types";
 
 const userSchema: Schema = new mongoose.Schema<signupType>({
-    fullName:{
-        type: String, 
+    fullName: {
+        type: String,
         required: true
     },
     email: {
@@ -14,6 +14,14 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     password: {
         type: String,
         required: true
+    },
+    loginAttempts: {
+        type: Number,
+        default: 0,
+    },
+    lockUntil: {
+        type: Date,
+        default: null,
     },
     role: {
         type: String,

@@ -6,6 +6,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { CLIENT_URL, JWT_SECRET_KEY } from "../config/config";
 import { sendEmail } from "../services/email";
 import { generatePasswordResetEmail, generatePasswordUpdatedEmail } from "../templates/email.templates";
+import { generateCsrfToken } from "../helpers/helper";
 
 class AuthController {
     // Signup User
@@ -51,23 +52,59 @@ class AuthController {
         try {
             const { email, password } = req.body;
 
+            const MAX_ATTEMPTS = 10;
+            const LOCK_TIME = 15 * 60 * 1000; // 15 minutes
+
             const userExist = await UserModel.findOne({ email: email });
 
             if (!userExist) {
-                return res.status(404).send({
-                    message: "Invalid email or password!",
-                    success: false
-                });
-            };
-
-            const isPasswordMatch = await bcrypt.compare(password, userExist.password);
-
-            if (!isPasswordMatch) {
                 return res.status(401).send({
                     message: "Invalid email or password!",
                     success: false
                 });
             };
+
+            // Check if the account is currently locked
+            if (userExist.lockUntil && userExist.lockUntil.getTime() > Date.now()) {
+                return res.status(423).send({
+                    message: "Your account is temporarily locked. Please try again later!.",
+                    success: false,
+                });
+            };
+
+            // Reset lock after the lock period has expired
+            if (userExist.lockUntil && userExist.lockUntil.getTime() <= Date.now()) {
+                userExist.lockUntil = null;
+                userExist.loginAttempts = 0;
+                await userExist.save();
+            };
+
+            const isPasswordMatch = await bcrypt.compare(password, userExist.password);
+
+            // Handle failed login attempts
+            if (!isPasswordMatch) {
+                userExist.loginAttempts += 1;
+
+                const attemptsLeft = Math.max(0, MAX_ATTEMPTS - userExist.loginAttempts);
+
+                if (userExist.loginAttempts >= MAX_ATTEMPTS) {
+                    userExist.lockUntil = new Date(Date.now() + LOCK_TIME);
+                };
+
+                await userExist.save();
+
+                return res.status(401).send({
+                    message: attemptsLeft > 0
+                        ? `Invalid email or password! You have ${attemptsLeft} login attempt${attemptsLeft === 1 ? "" : "s"} remaining before your account is temporarily locked.`
+                        : "Invalid email or password! Your account has been temporarily locked due to too many failed login attempts.",
+                    success: false
+                });
+            };
+
+            // Successful login
+            userExist.loginAttempts = 0;
+            userExist.lockUntil = null;
+            await userExist.save();
 
             const payload = {
                 id: userExist._id.toString(),
@@ -79,11 +116,10 @@ class AuthController {
 
             res.cookie("auth_token", auth_token, {
                 httpOnly: true,
-                maxAge: 3000 * 1000,
+                maxAge: 60 * 60 * 24 * 15 * 1000,
                 sameSite: "lax",
                 secure: true
             });
-
 
             res.status(200).send({
                 message: "Logged in successfully!",
