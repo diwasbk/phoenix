@@ -1,15 +1,14 @@
 "use client";
-
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MdPassword } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { changePasswordSchema, changePasswordType, } from "../schema";
+import { changePasswordSchema, changePasswordType } from "@/app/lib/schemas/auth.schema";
 import { handleChangePassword } from "@/app/lib/actions/auth-actions";
 
-export default function ChangePasswordPage() {
+export default function ChangePasswordPage({ }) {
     const router = useRouter();
 
     const {
@@ -27,16 +26,17 @@ export default function ChangePasswordPage() {
 
             if (!res.success) {
                 throw new Error(res.message || "Failed to change password!");
-            }
+            };
 
             toast.success(res.message || "Password changed successfully!");
 
             reset();
 
-            router.push("/admin/dashboard");
+            router.push("/login");
+
         } catch (err: any) {
             toast.error(err.message || "Failed to change password!");
-        }
+        };
     };
 
     return (
@@ -46,7 +46,6 @@ export default function ChangePasswordPage() {
 
                     {/* Left */}
                     <div className="flex flex-col justify-between border-b border-slate-200 p-7 sm:p-9 lg:border-b-0 lg:border-r">
-
                         <div>
                             <p className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-800">
                                 Security
@@ -77,7 +76,6 @@ export default function ChangePasswordPage() {
                             Use a strong password with uppercase, lowercase,
                             numbers, and special characters.
                         </div>
-
                     </div>
 
                     {/* Right */}
@@ -96,11 +94,7 @@ export default function ChangePasswordPage() {
                                 Enter your current password and choose a new one.
                             </p>
 
-                            <form
-                                onSubmit={handleSubmit(onSubmit)}
-                                className="mt-8 space-y-5"
-                            >
-
+                            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
                                 {/* Current Password */}
                                 <div className="space-y-3">
                                     <label
@@ -197,11 +191,9 @@ export default function ChangePasswordPage() {
                                         ? "Changing Password..."
                                         : "Change Password"}
                                 </button>
-
                             </form>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

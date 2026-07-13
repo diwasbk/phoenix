@@ -21,3 +21,22 @@ export const changePasswordSchema = z.object({
     path: ["confirmPassword"]
 });
 export type changePasswordType = z.infer<typeof changePasswordSchema>;
+
+/* 2FA Setup Verification Schema */
+export const twoFactorSetupVerificationSchema = z.object({
+    authCode: z
+        .string()
+        .nonempty("Auth Code is required.")
+});
+export type twoFactorSetupVerificationType = z.infer<typeof twoFactorSetupVerificationSchema>;
+
+/* 2FA Login Verification Schema */
+export const twoFactorLoginVerificationSchema = z.object({
+    authCode: z
+        .string()
+        .nonempty("Auth Code is required."),
+    tempJWT: z
+        .string()
+        .nonempty("Token is required.")
+});
+export type twoFactorLoginVerificationType = z.infer<typeof twoFactorLoginVerificationSchema>;

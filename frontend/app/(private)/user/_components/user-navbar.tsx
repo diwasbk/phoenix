@@ -6,7 +6,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function AdminNavbar() {
+export default function UserNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -14,33 +14,29 @@ export default function AdminNavbar() {
     const handleLogout = async () => {
         try {
             await clearAuthTokenCookie();
-
             toast.success("Logged out successfully!");
 
             router.replace("/login");
 
         } catch (err: any) {
-            toast.error("Logout failed!");
+            toast.error("Logout failed");
         };
     };
 
     const navItems = [
-        { name: "Applications", href: "/admin/applications" },
-        { name: "Inquiries", href: "/admin/inquiries" },
-        { name: "Security", href: "/admin/security" },
+        { name: "Dashboard", href: "/user/dashboard" },
+        { name: "Security", href: "/user/security" },
     ];
 
     return (
         <>
             <div aria-hidden className="h-20" />
-            <nav
-                className="fixed left-0 right-0 top-0 z-50 border-b border-gray-200 bg-white shadow-sm"
-                style={{ top: "env(safe-area-inset-top)" }}
-            >
+            <nav className="fixed left-0 right-0 top-0 z-50 border-b border-gray-200 bg-white shadow-sm"
+                style={{ top: "env(safe-area-inset-top)" }} >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-20 items-center justify-between">
                         {/* Logo */}
-                        <Link href="/admin/dashboard" className="shrink-0 transition-opacity hover:opacity-80">
+                        <Link href="/user/dashboard" className="shrink-0 transition-opacity hover:opacity-80">
                             <Image
                                 src="/images/logo.jpg"
                                 alt="Phoenix logo"

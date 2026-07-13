@@ -2,6 +2,15 @@ import mongoose, { Schema } from "mongoose";
 import { signupType } from "../types/auth.types";
 
 const userSchema: Schema = new mongoose.Schema<signupType>({
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true,
+    },
+    profilePicture: {
+        type: String,
+        default: null,
+    },
     fullName: {
         type: String,
         required: true
@@ -13,7 +22,7 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     },
     password: {
         type: String,
-        required: true
+        default: null
     },
     loginAttempts: {
         type: Number,
@@ -21,6 +30,19 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     },
     lockUntil: {
         type: Date,
+        default: null,
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local",
+    },
+    twoFactorEnabled: {
+        type: Boolean,
+        default: false,
+    },
+    twoFactorSecret: {
+        type: String,
         default: null,
     },
     role: {

@@ -7,6 +7,10 @@ import { MdEmail, MdPassword } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
 import { handleLogin } from '@/app/lib/actions/auth-actions';
 import { toast } from 'react-toastify';
+import { getDecodedTokenFromCookie } from '@/app/lib/cookie';
+import Link from 'next/link';
+import { FcGoogle } from 'react-icons/fc';
+import { API_BASE_URL } from '@/app/lib/config/config';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -27,13 +31,33 @@ export default function LoginPage() {
                 throw new Error(res.message || "Login failed!");
             };
 
-            toast.success(res.message || "Login successful!");
+            if (res.result?.requires2FA && res.result?.tempJWT) {
+                return router.push(`/login/2fa?tempJWT=${res.result.tempJWT}`)
+            };
 
-            router.push("/admin/dashboard");
+            // Decoding after successful login (cookie is now set)
+            const decoded = await getDecodedTokenFromCookie();
+
+            switch (decoded.role) {
+                case "admin":
+                    router.replace("/admin/dashboard");
+                    break;
+                case "user":
+                    router.replace("/user/dashboard");
+                    break;
+                default:
+                    router.replace("/");
+            };
+
+            toast.success(res.message || "Login successful!");
 
         } catch (err: any) {
             toast.error(err.message || "Login failed!");
         };
+    };
+
+    const handleGoogleLogin = () => {
+        window.location.href = `${API_BASE_URL}/auth/google/login`;
     };
 
     return (
@@ -116,6 +140,14 @@ export default function LoginPage() {
                                         )}
                                     </div>
 
+                                    <div className="flex justify-end">
+                                        <Link
+                                            href={"/request-password"}
+                                            className="text-sm font-medium text-blue-700 hover:text-blue-800 hover:underline"
+                                        >
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
                                     <button
                                         type="submit"
                                         disabled={isSubmitting}
@@ -124,7 +156,31 @@ export default function LoginPage() {
                                     >
                                         {isSubmitting ? "Logging in..." : "Login"}
                                     </button>
+                                    <div className="flex items-center gap-4 py-1">
+                                        <div className="h-px flex-1 bg-slate-200" />
+                                        <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                                            OR
+                                        </span>
+                                        <div className="h-px flex-1 bg-slate-200" />
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleGoogleLogin}
+                                        className="flex w-full items-center justify-center gap-3 rounded-full border border-slate-300 bg-white px-6 py-2.5 font-semibold text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 cursor-pointer"
+                                    >
+                                        <FcGoogle size={22} />
+                                        Continue with Google
+                                    </button>
                                 </form>
+                                <div className="mt-6 text-center text-sm text-slate-600">
+                                    New to Phoenix?{" "}
+                                    <Link
+                                        href={"/signup"}
+                                        className="font-semibold text-blue-700 hover:text-blue-800 hover:underline cursor-pointer"
+                                    >
+                                        Create an account
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

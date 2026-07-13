@@ -6,6 +6,7 @@ import authRouter from "./routes/auth.route";
 import inquiryRoute from "./routes/inquiry.route";
 import applicationRouter from "./routes/application.route";
 import { apiLimiterMiddleware, authLimiterMiddleware } from "./middlewares/rate.limiter.middleware";
+import passport from "./config/passport";
 
 const app: Application = express();
 
@@ -16,6 +17,7 @@ app.use(cors({
     credentials: true,
 }));
 
+app.use(passport.initialize());
 app.use("/api", apiLimiterMiddleware);
 app.use("/api/auth", authLimiterMiddleware, authRouter);
 app.use("/api/inquiry", inquiryRoute);
