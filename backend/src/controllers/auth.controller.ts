@@ -410,6 +410,68 @@ class AuthController {
             });
         };
     };
+
+    // Enable 2FA
+    enable2FA = async (req: Request, res: Response) => {
+        try {
+            const user = req.user as { id: string };
+
+            const userExist = await UserModel.findOne({ _id: user.id });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found!",
+                    success: false
+                });
+            };
+
+            if (userExist.twoFactorEnabled) {
+                return res.status(400).send({
+                    message: "2FA is already enabled.",
+                    result: {
+                        twoFactorAlreadyEnabled: true
+                    },
+                    success: false
+                });
+            };
+
+            let secret;
+
+            if (!userExist.twoFactorSecret) {
+                secret = speakeasy.generateSecret({
+                    issuer: "QuickAuth",
+                    name: userExist.email
+                });
+
+                userExist.twoFactorSecret = secret.base32;
+                await userExist.save();
+            } else {
+                secret = {
+                    otpauth_url: speakeasy.otpauthURL({
+                        secret: userExist.twoFactorSecret,
+                        label: userExist.email,
+                        issuer: "QuickAuth",
+                        encoding: "base32"
+                    }),
+                };
+            };
+
+            const qrCode = await QRCode.toDataURL(secret.otpauth_url as any);
+
+            return res.status(200).send({
+                message: "QR code generated successfully.",
+                result: qrCode,
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            return res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
+                success: false
+            });
+        };
+    };
 };
 
 export default AuthController;

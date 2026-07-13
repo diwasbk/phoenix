@@ -22,6 +22,9 @@ authRouter.get("/google/callback", passport.authenticate("google", { session: fa
     authController.googleCallback
 );
 
+// Enable 2FA
+authRouter.get("/2fa/enable", jwtAuthMiddleware, authController.enable2FA);
+
 authRouter.post("/signup", schemaValidateMiddleware(signupSchema), authController.signupUser);
 authRouter.post("/login", schemaValidateMiddleware(loginSchema), authController.loginUser);
 authRouter.patch("/change-password", jwtAuthMiddleware, csrfVerificationMiddleware, schemaValidateMiddleware(changePasswordSchema), authController.changePassword);
