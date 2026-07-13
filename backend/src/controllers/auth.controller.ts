@@ -594,6 +594,46 @@ class AuthController {
             });
         };
     };
+
+    // Disable 2FA
+    disable2FA = async (req: Request, res: Response) => {
+        try {
+            const user = req.user as { id: string };
+
+            const userExist = await UserModel.findOne({ _id: user.id });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found.",
+                    success: false
+                });
+            };
+
+            if (!userExist.twoFactorEnabled) {
+                return res.status(400).send({
+                    message: "2FA is not enabled.",
+                    success: false
+                });
+            };
+
+            userExist.twoFactorEnabled = false;
+            userExist.twoFactorSecret = null;
+
+            await userExist.save();
+
+            return res.status(200).send({
+                message: "2FA disabled successfully.",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            return res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
+                success: false
+            });
+        };
+    };
 };
 
 export default AuthController;

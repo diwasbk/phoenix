@@ -31,6 +31,9 @@ authRouter.post("/2fa/verify/setup", jwtAuthMiddleware, schemaValidateMiddleware
 // Verify 2FA Login
 authRouter.post("/2fa/verify/login", schemaValidateMiddleware(twoFactorVerificationSchema), authController.verify2FALogin);
 
+// Disable 2FA
+authRouter.get("/2fa/disable", jwtAuthMiddleware, authController.disable2FA);
+
 authRouter.post("/signup", schemaValidateMiddleware(signupSchema), authController.signupUser);
 authRouter.post("/login", schemaValidateMiddleware(loginSchema), authController.loginUser);
 authRouter.patch("/change-password", jwtAuthMiddleware, csrfVerificationMiddleware, schemaValidateMiddleware(changePasswordSchema), authController.changePassword);
