@@ -14,17 +14,20 @@ export default function AdminNavbar() {
     const handleLogout = async () => {
         try {
             await clearAuthTokenCookie();
+
             toast.success("Logged out successfully!");
+
             router.replace("/login");
+
         } catch (err: any) {
-            toast.error("Logout failed");
-        }
+            toast.error("Logout failed!");
+        };
     };
 
     const navItems = [
         { name: "Applications", href: "/admin/applications" },
         { name: "Inquiries", href: "/admin/inquiries" },
-        { name: "Security", href: "/admin/change-password" },
+        { name: "Security", href: "/admin/security" },
     ];
 
     return (
@@ -51,14 +54,14 @@ export default function AdminNavbar() {
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center gap-2">
                             {navItems.map((item) => {
-                                const isActive = pathname === item.href;
+                                const isActive = pathname.startsWith(item.href);
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         className={`rounded-lg px-4 py-2 text-sm transition-colors ${isActive
-                                                ? "bg-blue-700 text-white"
-                                                : "text-gray-700 hover:bg-blue-700 hover:text-white"
+                                            ? "bg-blue-700 text-white"
+                                            : "text-gray-700 hover:bg-blue-700 hover:text-white"
                                             }`}
                                     >
                                         {item.name}
@@ -91,14 +94,14 @@ export default function AdminNavbar() {
                     <div className="md:hidden border-t border-gray-100 bg-white shadow-lg">
                         <div className="space-y-1 px-4 py-4">
                             {navItems.map((item) => {
-                                const isActive = pathname === item.href;
+                                const isActive = pathname.startsWith(item.href);
                                 return (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         className={`block rounded-lg px-4 py-3 text-base font-semibold ${isActive
-                                                ? "bg-blue-50 text-blue-700"
-                                                : "text-gray-700 hover:bg-gray-50"
+                                            ? "bg-blue-50 text-blue-700"
+                                            : "text-gray-700 hover:bg-gray-50"
                                             }`}
                                         onClick={() => setIsMenuOpen(false)}
                                     >

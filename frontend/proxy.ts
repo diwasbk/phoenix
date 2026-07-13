@@ -1,40 +1,51 @@
-import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
+import { NextRequest, NextResponse } from "next/server";
 import { JWT_SECRET_KEY } from "./app/lib/config/config";
 
-// Encode JWT secret key for verification
-const secret = new TextEncoder().encode(JWT_SECRET_KEY!);
+const secret = new TextEncoder().encode(JWT_SECRET_KEY);
 
-// Middleware function to protect routes
 export const proxy = async (req: NextRequest) => {
-    // Get auth token from cookies
     const token = req.cookies.get("auth_token")?.value;
+    const { pathname } = req.nextUrl;
 
-    // If no token found, redirect user to login page
+    // No token
     if (!token) {
-        return NextResponse.redirect(new URL("/login", req.url));
+        if (pathname.startsWith("/admin") || pathname.startsWith("/user")) {
+            return NextResponse.redirect(new URL("/login", req.url));
+        };
+
+        return NextResponse.next();
     };
 
     try {
-        // Verify JWT token validity
-        await jwtVerify(token, secret);
+        // Verify + decode JWT
+        const { payload } = await jwtVerify(token, secret);
 
-        // If valid, allow request to continue
+        const role = payload.role as string | undefined;
+
+        // Admin routes
+        if (pathname.startsWith("/admin") && role !== "admin") {
+            return NextResponse.redirect(new URL("/login", req.url));
+        };
+
+        // User routes
+        if (pathname.startsWith("/user") && role !== "user") {
+            return NextResponse.redirect(new URL("/login", req.url));
+        };
+
         return NextResponse.next();
 
-    } catch (err) {
-        // If token is invalid or expired, redirect to login
+    } catch (error) {
+        const response = NextResponse.redirect(new URL("/login", req.url));
 
-        const res = NextResponse.redirect(new URL("/login", req.url));
+        response.cookies.delete("auth_token");
+        response.cookies.delete("csrf_token");
 
-        // Remove invalid token from cookies
-        res.cookies.delete("auth_token");
-
-        return res;
+        return response;
     };
 };
 
-// Apply middleware only to admin routes
+// Apply middleware only to protected routes
 export const config = {
-    matcher: ["/admin/:path*"]
+    matcher: ["/admin/:path*", "/user/:path*"]
 };

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { handleSignup } from "@/app/lib/actions/auth-actions";
 import { toast } from "react-toastify";
 import { signupSchema, signupType } from "../schema";
+import Link from "next/link";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -222,9 +223,17 @@ export default function SignupPage() {
                                         {isSubmitting ? "Creating Account..." : "Create Account"}
                                     </button>
                                 </form>
+                                <div className="mt-6 text-center text-sm text-slate-600">
+                                    Already have an account?{" "}
+                                    <Link
+                                        href={"/login"}
+                                        className="font-semibold text-blue-700 hover:text-blue-800 hover:underline cursor-pointer"
+                                    >
+                                        Log in
+                                    </Link>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
