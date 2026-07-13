@@ -472,6 +472,53 @@ class AuthController {
             });
         };
     };
+
+    // Verify 2FA Setup
+    verify2FASetup = async (req: Request, res: Response) => {
+        try {
+            const user = req.user as { id: string };
+
+            const { authCode } = req.body;
+
+            const userExist = await UserModel.findOne({ _id: user.id });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found.",
+                    success: false
+                });
+            };
+
+            const verified = speakeasy.totp.verify({
+                secret: userExist.twoFactorSecret as string,
+                encoding: "base32",
+                token: authCode,
+                window: 1
+            });
+
+            if (!verified) {
+                return res.status(400).send({
+                    message: "Invalid authentication code.",
+                    success: false
+                });
+            };
+
+            userExist.twoFactorEnabled = true;
+            await userExist.save();
+
+            res.status(200).send({
+                message: "2FA Enabled",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            return res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
+                success: false
+            });
+        };
+    };
 };
 
 export default AuthController;
