@@ -9,7 +9,7 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     },
     profilePicture: {
         type: String,
-        default: "",
+        default: null,
     },
     fullName: {
         type: String,
@@ -22,7 +22,7 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
     },
     password: {
         type: String,
-        required: true
+        default: null
     },
     loginAttempts: {
         type: Number,
@@ -36,6 +36,14 @@ const userSchema: Schema = new mongoose.Schema<signupType>({
         type: String,
         enum: ["local", "google"],
         default: "local",
+    },
+    twoFactorEnabled: {
+        type: Boolean,
+        default: false,
+    },
+    twoFactorSecret: {
+        type: String,
+        default: null,
     },
     role: {
         type: String,

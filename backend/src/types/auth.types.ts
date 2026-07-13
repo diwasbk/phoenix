@@ -37,6 +37,13 @@ export const signupSchema = z.object({
     provider: z
         .enum(["local", "google"])
         .default("local"),
+    twoFactorEnabled: z
+        .boolean()
+        .default(false),
+    twoFactorSecret: z
+        .string()
+        .nullable()
+        .default(null),
     role: z
         .enum(["admin", "user"])
         .default("user")
@@ -110,3 +117,13 @@ export const resetPasswordSchema = z.object({
     path: ["confirmPassword"]
 });
 export type resetPassswordType = z.infer<typeof resetPasswordSchema>;
+
+/* 2FA Verification Schema */
+export const twoFactorVerificationSchema = z.object({
+    authCode: z
+        .string("Auth Code is required.")
+        .nonempty("Auth Code is required."),
+    tempJWT: z
+        .string("Token is required.")
+        .nonempty("Token is required.")
+});

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../models/user.model";
+import { IUser, UserModel } from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
 import jwt, { JwtPayload } from "jsonwebtoken";
@@ -7,6 +7,8 @@ import { CLIENT_URL, JWT_SECRET_KEY } from "../config/config";
 import { sendEmail } from "../services/email";
 import { generatePasswordResetEmail, generatePasswordUpdatedEmail } from "../templates/email.templates";
 import { generateCsrfToken } from "../helpers/helper";
+import speakeasy from "speakeasy";
+import QRCode from "qrcode";
 
 class AuthController {
     // Signup User
@@ -41,7 +43,7 @@ class AuthController {
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: false
             });
         };
@@ -106,6 +108,19 @@ class AuthController {
             userExist.lockUntil = null;
             await userExist.save();
 
+            // If 2FA is enabled, don't issue JWT yet
+            if (userExist.twoFactorEnabled) {
+                const tempJWT = jwt.sign({ id: userExist._id }, JWT_SECRET_KEY, { expiresIn: "5m" });
+                return res.status(200).json({
+                    message: "2FA verification required.",
+                    result: {
+                        requires2FA: true,
+                        tempJWT: tempJWT
+                    },
+                    success: true
+                });
+            };
+
             const payload = {
                 id: userExist._id.toString(),
                 email: userExist.email,
@@ -137,8 +152,65 @@ class AuthController {
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: true
+            });
+        };
+    };
+
+    // Google Callback
+    googleCallback = async (req: Request, res: Response) => {
+        try {
+            const user = req.user as IUser;
+
+            if (user.twoFactorEnabled) {
+                const tempJWT = jwt.sign({ id: user._id }, JWT_SECRET_KEY, { expiresIn: "5m" });
+
+                // Send user to a 2FA login verification page
+                return res.redirect(
+                    `${CLIENT_URL}/login/2fa?tempJWT=${tempJWT}`
+                );
+            };
+
+            const payload = {
+                id: user?._id.toString(),
+                email: user?.email,
+                role: user?.role
+            };
+
+            const token = generateToken(payload);
+
+            res.cookie("auth_token", token, {
+                httpOnly: true,
+                sameSite: "lax",
+                maxAge: 60 * 60 * 1000,
+                secure: false
+            });
+
+            const csrfToken = generateCsrfToken();
+
+            res.cookie("csrf_token", csrfToken, {
+                httpOnly: false,
+                secure: true,
+                sameSite: "lax"
+            });
+
+            switch (user.role) {
+                case "admin":
+                    res.redirect(`${CLIENT_URL}/admin/dashboard`);
+                    break;
+                case "user":
+                    res.redirect(`${CLIENT_URL}/user/dashboard`);
+                    break;
+                default:
+                    res.redirect(`${CLIENT_URL}/login`);
+            };
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
+                success: false
             });
         };
     };
@@ -180,18 +252,24 @@ class AuthController {
             res.clearCookie("auth_token", {
                 httpOnly: true,
                 secure: true,
-                sameSite: "strict"
+                sameSite: "lax"
+            });
+
+            res.clearCookie("csrf_token", {
+                httpOnly: false,
+                secure: true,
+                sameSite: "lax"
             });
 
             res.status(200).send({
-                message: "Password changed successfully!",
+                message: "Password changed successfully. Please log in again!",
                 success: true
             });
 
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: false
             });
         };
@@ -223,7 +301,7 @@ class AuthController {
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: false
             });
         };
@@ -237,7 +315,7 @@ class AuthController {
             let decoded;
 
             try {
-                decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload
+                decoded = jwt.verify(token, JWT_SECRET_KEY) as JwtPayload;
 
             } catch (err: any) {
                 return res.status(400).send({
@@ -272,7 +350,7 @@ class AuthController {
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.response.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: false
             });
         };
@@ -327,7 +405,7 @@ class AuthController {
         } catch (err: any) {
             console.log(err);
             res.status(500).send({
-                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
                 success: false
             });
         };
