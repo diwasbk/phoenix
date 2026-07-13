@@ -519,6 +519,81 @@ class AuthController {
             });
         };
     };
+
+    // Verify Login 2FA
+    verify2FALogin = async (req: Request, res: Response) => {
+        try {
+
+            const { tempJWT, authCode } = req.body;
+
+            const decoded = jwt.verify(tempJWT, JWT_SECRET_KEY) as JwtPayload;
+
+            const userExist = await UserModel.findOne({ _id: decoded.id });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found.",
+                    success: false
+                });
+            };
+
+            if (!userExist.twoFactorEnabled) {
+                return res.status(400).send({
+                    message: "2FA is not enabled.",
+                    success: false
+                });
+            };
+
+            const verified = speakeasy.totp.verify({
+                secret: userExist.twoFactorSecret as string,
+                encoding: "base32",
+                token: authCode,
+                window: 1
+            });
+
+            if (!verified) {
+                return res.status(400).send({
+                    message: "Invalid authentication code.",
+                    success: false
+                });
+            };
+
+            const payload = {
+                id: userExist._id.toString(),
+                email: userExist.email,
+                role: userExist.role
+            };
+
+            const auth_token = generateToken(payload);
+
+            res.cookie("auth_token", auth_token, {
+                httpOnly: true,
+                maxAge: 60 * 60 * 1000,
+                sameSite: "lax",
+                secure: false
+            });
+
+            const csrfToken = generateCsrfToken();
+
+            res.cookie("csrf_token", csrfToken, {
+                httpOnly: false,
+                secure: true,
+                sameSite: "lax"
+            });
+
+            return res.status(200).send({
+                message: "Login successfully.",
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err)
+            return res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error!",
+                success: false
+            });
+        };
+    };
 };
 
 export default AuthController;
