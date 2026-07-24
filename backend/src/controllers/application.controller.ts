@@ -49,11 +49,23 @@ class ApplicationController {
     // Get All Applications
     getAllApplications = async (req: Request, res: Response) => {
         try {
-            const result = await ApplicationModel.find();
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 5;
+
+            const total = await ApplicationModel.countDocuments();
+            const result = await ApplicationModel.find().sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit);
 
             res.status(200).send({
                 message: result.length ? "Applications fetched successfully!" : "applications not found!",
                 result: result,
+                pagination: {
+                    page: page,
+                    limit: limit,
+                    total: total,
+                    totalPages: Math.ceil(total / limit),
+                    hasNextPage: page < Math.ceil(total / limit),
+                    hasPreviousPage: page > 1
+                },
                 success: true
             });
 

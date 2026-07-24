@@ -40,13 +40,18 @@ export default function ApplicationTable() {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [applicationToDelete, setApplicationToDelete] = useState<string | null>(null);
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<any>(null);
+
   useEffect(() => {
     const fetchApplication = async () => {
       try {
-        const res = await handleGetAllApplication();
+        const res = await handleGetAllApplication(currentPage);
 
         if (res.success) {
           setapplications(res.result);
+          setPagination(res.pagination || null);
 
         } else {
           throw new Error(res.message || "Failed to fetch applications!");
@@ -61,7 +66,7 @@ export default function ApplicationTable() {
     };
 
     fetchApplication();
-  }, []);
+  }, [currentPage]);
 
 
   // filtering
@@ -312,6 +317,34 @@ export default function ApplicationTable() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {/* PAGINATION */}
+      {pagination && (
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+          <button
+            onClick={() => setCurrentPage(prev => prev - 1)}
+            disabled={!pagination.hasPreviousPage || loading}
+            className={`rounded-full border px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold transition-colors ${!pagination.hasPreviousPage || loading
+              ? "pointer-events-none border-blue-200 bg-white text-slate-400"
+              : "border-blue-200 bg-white text-blue-600 hover:bg-blue-50 cursor-pointer"
+              }`}
+          >
+            Previous
+          </button>
+          <span className="rounded-full bg-blue-500 px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold text-white">
+            {pagination.page} of {pagination.totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage(prev => prev + 1)}
+            disabled={!pagination.hasNextPage || loading}
+            className={`rounded-full border px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold transition-colors ${!pagination.hasNextPage || loading
+              ? "pointer-events-none border-blue-200 bg-white text-slate-400"
+              : "border-blue-200 bg-white text-blue-600 hover:bg-emerald-50 cursor-pointer"
+              }`}
+          >
+            Next
+          </button>
         </div>
       )}
     </div>

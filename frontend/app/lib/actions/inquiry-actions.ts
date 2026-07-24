@@ -27,9 +27,9 @@ export const handleSendInquiry = async (data: inquiryType) => {
 };
 
 // Handle Get All Inquiries
-export const handleGetAllInquiries = async () => {
+export const handleGetAllInquiries = async (page: number = 1, limit: number = 5) => {
     try {
-        const result = await getAllInquiries();
+        const result = await getAllInquiries(page, limit);
 
         if (!result.success) {
             return {
@@ -41,10 +41,10 @@ export const handleGetAllInquiries = async () => {
         return {
             message: result.message || "Inquiries fetched successfully!",
             result: result.result,
+            pagination: result.pagination,
             success: true
         };
-    } catch
-    (err: Error | any) {
+    } catch (err: Error | any) {
         return {
             message: err.message || "Failed to fetch inquiries!",
             success: false

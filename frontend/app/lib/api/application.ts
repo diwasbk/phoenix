@@ -15,9 +15,9 @@ export const submitApplication = async (data: applicationType) => {
 };
 
 // Get All Application
-export const getAllApplication = async () => {
+export const getAllApplication = async (page: number = 1, limit: number = 5) => {
     try {
-        const response = await axiosInstance.get(API.APPLICATION.GET_ALL);
+        const response = await axiosInstance.get(API.APPLICATION.GET_ALL(page, limit));
 
         return response.data;
 

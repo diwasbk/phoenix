@@ -26,9 +26,9 @@ export const handleSubmitApplication = async (data: applicationType) => {
 };
 
 // Handle Get All Application
-export const handleGetAllApplication = async () => {
+export const handleGetAllApplication = async (page: number = 1, limit: number = 5) => {
     try {
-        const result = await getAllApplication();
+        const result = await getAllApplication(page, limit);
 
         if (!result.success) {
             return {
@@ -40,6 +40,7 @@ export const handleGetAllApplication = async () => {
         return {
             message: result.message || "Applications fetched successfully!",
             result: result.result,
+            pagination: result.pagination,
             success: true
         };
     } catch
