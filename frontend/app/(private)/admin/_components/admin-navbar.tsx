@@ -27,6 +27,7 @@ export default function AdminNavbar() {
     const navItems = [
         { name: "Applications", href: "/admin/applications" },
         { name: "Inquiries", href: "/admin/inquiries" },
+        { name: "Activity Logs", href: "/admin/activity-logs" },
         { name: "Security", href: "/admin/security" },
     ];
 

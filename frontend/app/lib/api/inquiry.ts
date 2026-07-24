@@ -15,9 +15,9 @@ export const sendInquiry = async (data: inquiryType) => {
 };
 
 // Get All Inquiries
-export const getAllInquiries = async () => {
+export const getAllInquiries = async (page: number = 1, limit: number = 5) => {
     try {
-        const response = await axiosInstance.get(API.INQUIRY.GET_ALL);
+        const response = await axiosInstance.get(API.INQUIRY.GET_ALL(page, limit));
 
         return response.data;
 

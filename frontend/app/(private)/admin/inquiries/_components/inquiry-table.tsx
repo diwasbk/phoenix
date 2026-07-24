@@ -41,13 +41,18 @@ export default function InquiryTable() {
     const [showMessage, setShowMessage] = useState(false);
     const [selectedMessage, setSelectedMessage] = useState<any>(null);
 
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pagination, setPagination] = useState<any>(null);
+
     useEffect(() => {
         const fetchInquiries = async () => {
             try {
-                const res = await handleGetAllInquiries();
+                const res = await handleGetAllInquiries(currentPage);
 
                 if (res.success) {
                     setInquiries(res.result);
+                    setPagination(res.pagination || null);
 
                 } else {
                     toast.error(res.message || "Failed to fetch inquiries!");
@@ -62,7 +67,7 @@ export default function InquiryTable() {
         };
 
         fetchInquiries();
-    }, []);
+    }, [currentPage]);
 
 
     // filtering
@@ -356,6 +361,35 @@ export default function InquiryTable() {
                             </button>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* PAGINATION */}
+            {pagination && (
+                <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                    <button
+                        onClick={() => setCurrentPage(prev => prev - 1)}
+                        disabled={!pagination.hasPreviousPage || loading}
+                        className={`rounded-full border px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold transition-colors ${!pagination.hasPreviousPage || loading
+                            ? "pointer-events-none border-blue-200 bg-white text-slate-400"
+                            : "border-blue-200 bg-white text-blue-600 hover:bg-blue-50 cursor-pointer"
+                            }`}
+                    >
+                        Previous
+                    </button>
+                    <span className="rounded-full bg-blue-500 px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold text-white">
+                        {pagination.page} of {pagination.totalPages}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(prev => prev + 1)}
+                        disabled={!pagination.hasNextPage || loading}
+                        className={`rounded-full border px-3 py-2 sm:px-4 text-xs sm:text-sm font-semibold transition-colors ${!pagination.hasNextPage || loading
+                            ? "pointer-events-none border-blue-200 bg-white text-slate-400"
+                            : "border-blue-200 bg-white text-blue-600 hover:bg-emerald-50 cursor-pointer"
+                            }`}
+                    >
+                        Next
+                    </button>
                 </div>
             )}
         </div>

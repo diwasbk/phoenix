@@ -35,12 +35,24 @@ class InquiryController {
     // Get All Inquiries
     getAllInquiries = async (req: Request, res: Response) => {
         try {
-            const result = await InquiryModel.find();
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 5;
+
+            const total = await InquiryModel.countDocuments();
+            const result = await InquiryModel.find().sort({ createdAt: -1 }).skip((page - 1) * limit).limit(limit);;
 
             res.status(200).send({
                 message: "Inquiries fetched successfully.",
                 result: result,
-                success: true,
+                pagination: {
+                    page: page,
+                    limit: limit,
+                    total: total,
+                    totalPages: Math.ceil(total / limit),
+                    hasNextPage: page < Math.ceil(total / limit),
+                    hasPreviousPage: page > 1
+                },
+                success: true
             });
 
         } catch (err: any) {
