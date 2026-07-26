@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MdPassword } from "react-icons/md";
+import { MdPassword, MdSecurity } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { changePasswordSchema, changePasswordType } from "@/app/lib/schemas/auth.schema";
@@ -13,12 +13,30 @@ export default function ChangePasswordPage({ }) {
 
     const {
         register,
+        control,
         handleSubmit,
         reset,
         formState: { errors, isSubmitting },
     } = useForm<changePasswordType>({
         resolver: zodResolver(changePasswordSchema),
     });
+
+    const newPassword = useWatch({ control, name: "newPassword", defaultValue: "" });
+    const passwordChecks = [
+        newPassword.length >= 8,
+        /[A-Z]/.test(newPassword),
+        /[a-z]/.test(newPassword),
+        /[0-9]/.test(newPassword),
+        /[^A-Za-z0-9]/.test(newPassword)
+    ];
+    const passwordScore = passwordChecks.filter(Boolean).length;
+    const passwordStrength = passwordScore <= 1
+        ? { label: "Weak", message: "Try a less predictable password.", color: "bg-rose-500", text: "text-rose-700", surface: "border-rose-100 bg-rose-50/70", icon: "bg-rose-100 text-rose-700" }
+        : passwordScore <= 3
+            ? { label: "Fair", message: "A little more complexity will help.", color: "bg-amber-500", text: "text-amber-700", surface: "border-amber-100 bg-amber-50/70", icon: "bg-amber-100 text-amber-700" }
+            : passwordScore === 4
+                ? { label: "Good", message: "Your password is nearly there.", color: "bg-blue-600", text: "text-blue-700", surface: "border-blue-100 bg-blue-50/70", icon: "bg-blue-100 text-blue-700" }
+                : { label: "Strong", message: "Great choice — your password is secure.", color: "bg-emerald-600", text: "text-emerald-700", surface: "border-emerald-100 bg-emerald-50/70", icon: "bg-emerald-100 text-emerald-700" };
 
     const onSubmit = async (data: changePasswordType) => {
         try {
@@ -34,16 +52,15 @@ export default function ChangePasswordPage({ }) {
 
             router.push("/login");
 
-        } catch (err: any) {
-            toast.error(err.message || "Failed to change password!");
+        } catch (err: unknown) {
+            toast.error(err instanceof Error ? err.message : "Failed to change password!");
         };
     };
 
     return (
         <div className="relative mx-auto flex w-full max-w-6xl items-center justify-center mt-20">
-            <div className="w-full rounded-3xl border border-slate-200 bg-white shadow-xl">
+            <div className="w-full rounded-3xl border border-slate-200 bg-white shadow-xl mb-10">
                 <div className="grid lg:grid-cols-[1fr_1.05fr]">
-
                     {/* Left */}
                     <div className="flex flex-col justify-between border-b border-slate-200 p-7 sm:p-9 lg:border-b-0 lg:border-r">
                         <div>
@@ -140,9 +157,45 @@ export default function ChangePasswordPage({ }) {
                                         {...register("newPassword")}
                                         id="newPassword"
                                         type="password"
+                                        autoComplete="new-password"
+                                        aria-describedby="change-password-strength"
                                         placeholder="••••••••"
                                         className="w-full rounded-xl border border-slate-200 px-4 py-3.5 text-slate-900 placeholder:text-slate-400 transition-all focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-100"
                                     />
+
+                                    <div className={`rounded-2xl border p-3.5 transition-colors ${newPassword ? passwordStrength.surface : "border-slate-200 bg-slate-50"}`}>
+                                        <div id="change-password-strength" className="flex items-center gap-3">
+                                            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${newPassword ? passwordStrength.icon : "bg-slate-200 text-slate-500"}`}>
+                                                <MdSecurity size={19} aria-hidden="true" />
+                                            </span>
+                                            <div className="min-w-0 flex-1">
+                                                <div className="flex items-center justify-between gap-3">
+                                                    <span className="text-xs font-semibold text-slate-600">Password strength</span>
+                                                    <span className={`text-xs font-bold ${newPassword ? passwordStrength.text : "text-slate-500"}`} aria-live="polite">
+                                                        {newPassword ? passwordStrength.label : "Not entered"}
+                                                    </span>
+                                                </div>
+                                                <p className="mt-0.5 truncate text-xs text-slate-500">
+                                                    {newPassword ? passwordStrength.message : "Create a secure password for your account."}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="mt-3 grid grid-cols-5 gap-1.5"
+                                            role="progressbar"
+                                            aria-label="Password strength"
+                                            aria-valuemin={0}
+                                            aria-valuemax={5}
+                                            aria-valuenow={passwordScore}
+                                        >
+                                            {passwordChecks.map((_, index) => (
+                                                <span
+                                                    key={index}
+                                                    className={`h-1.5 rounded-full transition-all ${index < passwordScore && newPassword ? passwordStrength.color : "bg-slate-200"}`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
 
                                     {errors.newPassword && (
                                         <p className="text-sm font-medium text-red-600">

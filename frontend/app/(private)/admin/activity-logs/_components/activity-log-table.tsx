@@ -22,10 +22,6 @@ function formatDate(dateStr: string) {
     });
 };
 
-function truncate(value: string, length = 28) {
-    return value.length > length ? `${value.slice(0, length)}...` : value;
-};
-
 export default function ActivityLogTable() {
     const [activityLogs, setActivityLogs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
@@ -76,21 +72,21 @@ export default function ActivityLogTable() {
     });
 
     function getClient(userAgent?: string) {
-    if (!userAgent) return "Unknown";
+        if (!userAgent) return "Unknown";
 
-    if (userAgent.includes("PostmanRuntime")) return "Postman";
-    if (userAgent.includes("curl")) return "cURL";
-    if (userAgent.includes("Insomnia")) return "Insomnia";
-    if (userAgent.includes("Thunder Client")) return "Thunder Client";
+        if (userAgent.includes("PostmanRuntime")) return "Postman";
+        if (userAgent.includes("curl")) return "cURL";
+        if (userAgent.includes("Insomnia")) return "Insomnia";
+        if (userAgent.includes("Thunder Client")) return "Thunder Client";
 
-    if (userAgent.includes("Edg/")) return "Microsoft Edge";
-    if (userAgent.includes("Chrome/")) return "Google Chrome";
-    if (userAgent.includes("Firefox/")) return "Mozilla Firefox";
-    if (userAgent.includes("Safari/") && !userAgent.includes("Chrome"))
-        return "Safari";
+        if (userAgent.includes("Edg/")) return "Microsoft Edge";
+        if (userAgent.includes("Chrome/")) return "Google Chrome";
+        if (userAgent.includes("Firefox/")) return "Mozilla Firefox";
+        if (userAgent.includes("Safari/") && !userAgent.includes("Chrome"))
+            return "Safari";
 
-    return "Unknown Client";
-};
+        return "Unknown Client";
+    };
 
     return (
         <div className="p-6 space-y-5">
@@ -161,9 +157,13 @@ export default function ActivityLogTable() {
                                     </td>
 
                                     <td className="px-5 py-4">
-                                        <p className="text-sm text-slate-700 font-medium">
+                                        <p
+                                            className="max-w-75 truncate text-sm text-slate-700 font-medium"
+                                            title={log.route}
+                                        >
                                             {log.route}
                                         </p>
+
                                         <p className="text-xs text-slate-400 mt-0.5">
                                             {log.ipAddress || "Unknown IP"}
                                         </p>
