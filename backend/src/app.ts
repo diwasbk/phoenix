@@ -3,7 +3,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import { CLIENT_URL } from "./config/config";
 import authRouter from "./routes/auth.route";
-import inquiryRoute from "./routes/inquiry.route";
+import inquiryRouter from "./routes/inquiry.route";
 import applicationRouter from "./routes/application.route";
 import { apiLimiterMiddleware, authLimiterMiddleware } from "./middlewares/rate.limiter.middleware";
 import passport from "./config/passport";
@@ -23,7 +23,7 @@ app.use(passport.initialize());
 app.use("/api", activityLoggingMiddleware);
 app.use("/api", apiLimiterMiddleware);
 app.use("/api/auth", authLimiterMiddleware, authRouter);
-app.use("/api/inquiry", inquiryRoute);
+app.use("/api/inquiry", inquiryRouter);
 app.use("/api/application", applicationRouter);
 app.use("/api/activity-logs", activityLogRouter);
 

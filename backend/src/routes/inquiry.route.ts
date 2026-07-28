@@ -6,11 +6,12 @@ import { jwtAuthMiddleware } from "../utils/jwt";
 import { authorizeAdminMiddleware, optionalAuthMiddleware } from "../middlewares/authorize.middleware";
 import { csrfVerificationMiddleware } from "../middlewares/csrf.verification.middleware";
 
-const inquiryRoute = express.Router();
+const inquiryRouter = express.Router();
 const inquiryController = new InquiryController();
 
-inquiryRoute.post("/send", optionalAuthMiddleware, schemaValidateMiddleware(inquirySchema), inquiryController.sendInquiry);
-inquiryRoute.get("/all", jwtAuthMiddleware, authorizeAdminMiddleware, inquiryController.getAllInquiries);
-inquiryRoute.delete("/delete/:inquiryId", jwtAuthMiddleware, authorizeAdminMiddleware, csrfVerificationMiddleware, inquiryController.deleteInquiryByID);
+inquiryRouter.post("/send", optionalAuthMiddleware, schemaValidateMiddleware(inquirySchema), inquiryController.sendInquiry);
+inquiryRouter.get("/all", jwtAuthMiddleware, authorizeAdminMiddleware, inquiryController.getAllInquiries);
+inquiryRouter.get("/by-user-id/:userId", inquiryController.getAllInquiriesByUserId);
+inquiryRouter.delete("/delete/:inquiryId", jwtAuthMiddleware, authorizeAdminMiddleware, csrfVerificationMiddleware, inquiryController.deleteInquiryByID);
 
-export default inquiryRoute;
+export default inquiryRouter;

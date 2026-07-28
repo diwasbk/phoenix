@@ -94,6 +94,48 @@ class ApplicationController {
         };
     };
 
+    // Get All Applications By User Id
+    getAllApplicationsByUserId = async (req: Request, res: Response) => {
+        try {
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 5;
+
+            const userExist = await UserModel.findOne({ _id: req.params.userId });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found!",
+                    success: false
+                });
+            };
+
+            const total = await ApplicationModel.countDocuments({ userId: req.params.userId });
+
+            const result = await ApplicationModel.find({ userId: req.params.userId }).skip((page - 1) * limit).limit(limit);
+
+            res.status(200).send({
+                message: result.length ? "Applications fetched successfully!" : "Applications not found!",
+                result: result,
+                pagination: {
+                    page,
+                    limit,
+                    total,
+                    totalPages: Math.ceil(total / limit),
+                    hasNextPage: page < Math.ceil(total / limit),
+                    hasPreviousPage: page > 1
+                },
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
+
     // Get Application By ID
     getApplicationByID = async (req: Request, res: Response) => {
         try {

@@ -80,6 +80,48 @@ class InquiryController {
         };
     };
 
+    // Get All Inquiries By User Id
+    getAllInquiriesByUserId = async (req: Request, res: Response) => {
+        try {
+            const page = Number(req.query.page) || 1;
+            const limit = Number(req.query.limit) || 5;
+
+            const userExist = await UserModel.findOne({ _id: req.params.userId });
+
+            if (!userExist) {
+                return res.status(404).send({
+                    message: "User not found!",
+                    success: false
+                });
+            };
+
+            const total = await InquiryModel.countDocuments({ userId: req.params.userId });
+
+            const result = await InquiryModel.find({ userId: req.params.userId }).skip((page - 1) * limit).limit(limit);
+
+            res.status(200).send({
+                message: result.length ? "Inquiries fetched successfully!" : "Inquiries not found!",
+                result: result,
+                pagination: {
+                    page,
+                    limit,
+                    total,
+                    totalPages: Math.ceil(total / limit),
+                    hasNextPage: page < Math.ceil(total / limit),
+                    hasPreviousPage: page > 1
+                },
+                success: true
+            });
+
+        } catch (err: any) {
+            console.log(err);
+            res.status(500).send({
+                message: err.message ? `Internal server error: ${err.message}` : "Internal server error.",
+                success: false
+            });
+        };
+    };
+
     // Delete Inquiry By ID
     deleteInquiryByID = async (req: Request, res: Response) => {
         try {
