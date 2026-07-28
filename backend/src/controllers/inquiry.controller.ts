@@ -1,13 +1,28 @@
 import { Request, Response } from "express";
 import { InquiryModel } from "../models/inquiry.model";
+import { UserModel } from "../models/user.model";
 
 class InquiryController {
     // Send Inquiry
     sendInquiry = async (req: Request, res: Response) => {
         try {
+            const user = req.user as { id: string } | null;
+            let isGuest = true;
+            let userId: string | undefined;
+
+            // Associate the inquiry with the user only if the authenticated user exists
+            if (user && user.id) {
+                const userExist = await UserModel.findOne({ _id: user.id });
+                if (userExist) {
+                    isGuest = false;
+                    userId = user.id;
+                };
+            };
+
             const { fullName, email, phoneNumber, address, academicLevel, destination, message, agreeContact } = req.body;
 
             await InquiryModel.create({
+                userId: userId,
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -15,7 +30,8 @@ class InquiryController {
                 academicLevel: academicLevel,
                 destination: destination,
                 message: message,
-                agreeContact: agreeContact
+                agreeContact: agreeContact,
+                isGuest: isGuest
             });
 
             res.status(201).send({

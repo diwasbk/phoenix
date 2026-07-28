@@ -1,6 +1,10 @@
 import { z } from "zod";
+import mongoose from "mongoose";
 
 export const applicationSchema = z.object({
+    userId: z
+        .instanceof(mongoose.Types.ObjectId)
+        .optional(),
     fullName: z
         .string("Full name is required.")
         .nonempty("Full name is required.")
@@ -66,7 +70,10 @@ export const applicationSchema = z.object({
         }),
     termsAgreed: z
         .boolean("You must agree to the rules and regulations.")
-        .refine((val) => val === true, "You must agree to the rules and regulations.")
+        .refine((val) => val === true, "You must agree to the rules and regulations."),
+    isGuest: z
+        .boolean()
+        .default(false)
 });
 
 export type applicationType = z.infer<typeof applicationSchema>;

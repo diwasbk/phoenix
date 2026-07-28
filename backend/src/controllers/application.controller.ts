@@ -1,16 +1,31 @@
 import { Request, Response } from "express";
 import { ApplicationModel } from "../models/application.model";
 import { ageCalculator } from "../services/common";
+import { UserModel } from "../models/user.model";
 
 class ApplicationController {
     // Submit Application
-    aubmitApplication = async (req: Request, res: Response) => {
+    submitApplication = async (req: Request, res: Response) => {
         try {
+            const user = req.user as { id: string } | null;
+            let isGuest = true;
+            let userId: string | undefined;
+
+            // Associate the application with the user only if the authenticated user exists
+            if (user && user.id) {
+                const userExist = await UserModel.findOne({ _id: user.id });
+                if (userExist) {
+                    isGuest = false;
+                    userId = user.id;
+                };
+            };
+
             const { fullName, email, phoneNumber, address, gender, dob, fatherName, motherName, parentPhone, responsiblePerson, responsiblePhone, foreignLanguage, testPreparation, otherService, preferredCountry, referralSource, termsAgreed } = req.body;
 
             const calculatedAge = ageCalculator(dob);
 
             const result = await ApplicationModel.create({
+                userId: userId,
                 fullName: fullName,
                 email: email,
                 phoneNumber: phoneNumber,
@@ -28,7 +43,8 @@ class ApplicationController {
                 otherService: otherService,
                 preferredCountry: preferredCountry,
                 referralSource: referralSource,
-                termsAgreed: termsAgreed
+                termsAgreed: termsAgreed,
+                isGuest: isGuest
             });
 
             res.status(201).send({

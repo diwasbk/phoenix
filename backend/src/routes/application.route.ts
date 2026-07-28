@@ -9,7 +9,7 @@ import { csrfVerificationMiddleware } from "../middlewares/csrf.verification.mid
 const applicationRouter = express.Router();
 const applicationController = new ApplicationController();
 
-applicationRouter.post("/submit", schemaValidateMiddleware(applicationSchema), applicationController.aubmitApplication);
+applicationRouter.post("/submit", schemaValidateMiddleware(applicationSchema), applicationController.submitApplication);
 applicationRouter.get("/all", jwtAuthMiddleware, authorizeAdminMiddleware, applicationController.getAllApplications);
 applicationRouter.get("/:applicationId", jwtAuthMiddleware, authorizeAdminMiddleware, applicationController.getApplicationByID);
 applicationRouter.put("/update/:applicationId", jwtAuthMiddleware, authorizeAdminMiddleware, csrfVerificationMiddleware, schemaValidateMiddleware(applicationSchema.partial()), applicationController.updateApplicationDetailByID);

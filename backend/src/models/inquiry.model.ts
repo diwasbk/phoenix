@@ -2,6 +2,11 @@ import mongoose, { Schema } from "mongoose";
 import { inquiryType } from "../types/inquiry.types";
 
 const inquirySchema: Schema = new mongoose.Schema<inquiryType>({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null
+    },
     fullName: {
         type: String,
         required: true
@@ -34,6 +39,10 @@ const inquirySchema: Schema = new mongoose.Schema<inquiryType>({
     agreeContact: {
         type: Boolean,
         required: true
+    },
+    isGuest: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

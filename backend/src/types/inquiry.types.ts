@@ -1,6 +1,10 @@
 import { z } from "zod";
+import mongoose from "mongoose";
 
 export const inquirySchema = z.object({
+    userId: z
+        .instanceof(mongoose.Types.ObjectId)
+        .optional(),
     fullName: z
         .string("Full name is required.")
         .nonempty("Full name is required.")
@@ -24,8 +28,16 @@ export const inquirySchema = z.object({
     destination: z.enum(["Japan", "UK", "Australia", "Korea", "USA"], {
         message: "Please select your preferred destination."
     }),
-    message: z.string("Message is required.").max(1000, "Message must be at most 1000 characters.").optional(),
-    agreeContact: z.boolean("You must agree to be contacted.").refine((val) => val === true, "You must agree to be contacted.")
+    message: z
+        .string("Message is required.")
+        .max(1000, "Message must be at most 1000 characters.")
+        .optional(),
+    agreeContact: z
+        .boolean("You must agree to be contacted.")
+        .refine((val) => val === true, "You must agree to be contacted."),
+    isGuest: z
+        .boolean()
+        .default(false)
 });
 
 export type inquiryType = z.infer<typeof inquirySchema>;

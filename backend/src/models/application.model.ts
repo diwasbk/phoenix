@@ -2,6 +2,11 @@ import mongoose, { Schema } from "mongoose";
 import { applicationType } from "../types/application.types";
 
 const applicationSchema: Schema = new mongoose.Schema<applicationType>({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null
+    },
     fullName: {
         type: String,
         required: true
@@ -79,6 +84,10 @@ const applicationSchema: Schema = new mongoose.Schema<applicationType>({
     termsAgreed: {
         type: Boolean,
         required: true
+    },
+    isGuest: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 
