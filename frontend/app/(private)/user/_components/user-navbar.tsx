@@ -25,6 +25,8 @@ export default function UserNavbar() {
 
     const navItems = [
         { name: "Dashboard", href: "/user/dashboard" },
+        { name: "Applications", href: "/user/applications" },
+        { name: "Inquiries", href: "/user/inquiries" },
         { name: "Security", href: "/user/security" },
     ];
 
