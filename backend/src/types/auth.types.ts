@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isPlainText, PLAIN_TEXT_MESSAGE } from "../utils/xss";
 
 // Signup Schema
 export const signupSchema = z.object({
@@ -11,7 +12,8 @@ export const signupSchema = z.object({
     fullName: z
         .string("Full name is required.")
         .nonempty("Full name is required.")
-        .min(5, "Full name must be at least 5 characters."),
+        .min(5, "Full name must be at least 5 characters.")
+        .refine(isPlainText, PLAIN_TEXT_MESSAGE),
     email: z
         .string("Email is required.")
         .nonempty("Email is required.")

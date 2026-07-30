@@ -26,6 +26,18 @@ export const getAllInquiries = async (page: number = 1, limit: number = 5) => {
     };
 };
 
+// Get All Inquiries By User Id
+export const getAllInquiriesByUserId = async (userId: string, page: number = 1, limit: number = 5) => {
+    try {
+        const response = await axiosInstance.get(API.INQUIRY.GET_ALL_BY_USER_ID(userId, page, limit));
+
+        return response.data;
+
+    } catch (err: Error | any) {
+        throw new Error(err.response?.data?.message || err.response || "Failed to fetch inquiries!");
+    };
+};
+
 // Delete Inquiry By ID
 export const deleteInquiryByID = async (inquiryId: string) => {
     try {

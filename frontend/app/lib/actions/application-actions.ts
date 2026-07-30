@@ -1,5 +1,5 @@
 import { applicationType } from "@/app/(public)/apply/schema";
-import { deleteApplicationByID, getAllApplication, getApplicationByID, submitApplication, updateApplicationDetailByID } from "../api/application";
+import { deleteApplicationByID, getAllApplication, getAllApplicationByUserId, getApplicationByID, submitApplication, updateApplicationDetailByID } from "../api/application";
 
 export const handleSubmitApplication = async (data: applicationType) => {
     try {
@@ -45,6 +45,33 @@ export const handleGetAllApplication = async (page: number = 1, limit: number = 
         };
     } catch
     (err: Error | any) {
+        return {
+            message: err.message || "Failed to fetch applications!",
+            success: false
+        };
+    };
+};
+
+// Handle Get All Application By User ID
+export const handleGetAllApplcationByUserId = async (userId: string, page: number = 1, limit: number = 5) => {
+    try {
+        const result = await getAllApplicationByUserId(userId, page, limit);
+
+        if (!result.success) {
+            return {
+                message: result.message || "Failed to fetch applications!",
+                success: false
+            };
+        };
+
+        return {
+            message: result.message || "Applications fetched successfully!",
+            result: result.result,
+            pagination: result.pagination,
+            success: true
+        };
+
+    } catch (err: Error | any) {
         return {
             message: err.message || "Failed to fetch applications!",
             success: false

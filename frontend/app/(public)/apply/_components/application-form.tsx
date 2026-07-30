@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { applicationSchema, applicationType } from "../schema";
 import { handleSubmitApplication } from "@/app/lib/actions/application-actions";
 import { toast } from "react-toastify";
+import { handleGetMe } from "@/app/lib/actions/auth-actions";
 
 const countryOptions = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 const languageOptions = ['English', 'Japanese', 'Korean', 'Others'];
@@ -23,9 +24,19 @@ export default function ApplicationForm() {
         handleSubmit,
         reset,
         formState: { errors, isSubmitting }
-    } = useForm<applicationType>({
-        resolver: zodResolver(applicationSchema),
-    });
+    } = useForm<applicationType>(
+        {
+            resolver: zodResolver(applicationSchema),
+            defaultValues: async () => {
+                const res = await handleGetMe();
+                return {
+                    fullName: res.result?.fullName ?? "",
+                    email: res.result?.email ?? "",
+
+                } as any;
+            }
+        }
+    );
 
     const onSubmit = async (data: applicationType) => {
         try {

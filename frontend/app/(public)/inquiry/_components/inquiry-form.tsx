@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { inquirySchema, inquiryType } from "../schema";
 import { handleSendInquiry } from "@/app/lib/actions/inquiry-actions";
 import { toast } from "react-toastify";
+import { handleGetMe } from "@/app/lib/actions/auth-actions";
 
 const destinations = ['Japan', 'UK', 'Australia', 'Korea', 'USA'];
 
@@ -15,6 +16,15 @@ export default function InquiryForm() {
         formState: { errors, isSubmitting }
     } = useForm<inquiryType>({
         resolver: zodResolver(inquirySchema),
+
+        defaultValues: async () => {
+            const res = await handleGetMe();
+            return {
+                fullName: res.result?.fullName ?? "",
+                email: res.result?.email ?? "",
+
+            } as any;
+        }
     });
 
     const onSubmit = async (data: inquiryType) => {
