@@ -9,9 +9,12 @@ import { apiLimiterMiddleware, authLimiterMiddleware } from "./middlewares/rate.
 import passport from "./config/passport";
 import { activityLoggingMiddleware } from "./middlewares/activity.logging.middleware";
 import activityLogRouter from "./routes/activitylog.route";
+import { securityHeadersMiddleware } from "./middlewares/security.headers.middleware";
 
 const app: Application = express();
 
+app.disable("x-powered-by");
+app.use(securityHeadersMiddleware);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({

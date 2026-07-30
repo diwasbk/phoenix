@@ -1,56 +1,43 @@
 import { z } from "zod";
-import mongoose from "mongoose";
-import { isPlainText, PLAIN_TEXT_MESSAGE } from "../utils/xss";
 
 export const applicationSchema = z.object({
-    userId: z
-        .instanceof(mongoose.Types.ObjectId)
-        .optional(),
     fullName: z
-        .string("Full name is required.")
+        .string()
         .nonempty("Full name is required.")
-        .min(5, "Full name must be at least 5 characters.")
-        .refine(isPlainText, PLAIN_TEXT_MESSAGE),
+        .min(5, "Full name must be at least 5 characters."),
     email: z
-        .string("Email is required.")
+        .string()
         .nonempty("Email is required.")
         .email("Invalid email address."),
     phoneNumber: z
-        .string("Phone number is required.")
+        .string()
         .nonempty("Phone number is required.")
         .length(10, "Phone number must be exactly 10 digits.")
         .regex(/^\d+$/, "Phone number must contain only digits"),
     address: z
         .string("Address is required.")
         .nonempty("Address is required.")
-        .min(3, "Address must be at least 3 characters.")
-        .refine(isPlainText, PLAIN_TEXT_MESSAGE),
+        .min(3, "Address must be at least 3 chatacters."),
     gender: z
-        .enum(["Male", "Female", "Others"], { message: "Gender is required." }),
+        .enum(["Male", "Female", "Other"], { message: "Gender is required." }),
     dob: z
         .string("Date of birth is required.")
         .nonempty("Date of birth is required."),
-    age: z
-        .number()
-        .optional(),
     fatherName: z
-        .string("Father's name is required.")
+        .string()
         .nonempty("Father's name is required.")
-        .min(5, "Father's name must be at least 5 characters.")
-        .refine(isPlainText, PLAIN_TEXT_MESSAGE),
+        .min(5, "Father's name must be at least 5 characters."),
     motherName: z
-        .string("Mother's name is required.")
+        .string()
         .nonempty("Mother's name is required.")
-        .min(5, "Mothers's name must be at least 5 characters.")
-        .refine(isPlainText, PLAIN_TEXT_MESSAGE),
+        .min(5, "Mothers's name must be at least 5 characters."),
     parentPhone: z
-        .string("Parent phone number is required.")
+        .string()
         .nonempty("Parent phone number is required.")
         .length(10, "Parent phone number must be exactly 10 digits.")
         .regex(/^\d+$/, "Phone number must contain only digits"),
     responsiblePerson: z
         .string()
-        .refine(isPlainText, PLAIN_TEXT_MESSAGE)
         .optional(),
     responsiblePhone: z
         .string()
@@ -64,8 +51,7 @@ export const applicationSchema = z.object({
             message: "Please select a test preparation option."
         }),
     otherService: z
-        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Others"])
-        .optional(),
+        .enum(["Translation", "Documentation Guidance", "College / University Placement", "Visa Application / Interview Preparation", "Others"]).optional(),
     preferredCountry: z
         .enum(["Japan", "UK", "Australia", "Korea", "USA", "Others"], {
             message: "Preferred country is required."
@@ -76,10 +62,7 @@ export const applicationSchema = z.object({
         }),
     termsAgreed: z
         .boolean("You must agree to the rules and regulations.")
-        .refine((val) => val === true, "You must agree to the rules and regulations."),
-    isGuest: z
-        .boolean()
-        .default(false)
+        .refine((val) => val === true, "You must agree to the rules and regulations.")
 });
 
 export type applicationType = z.infer<typeof applicationSchema>;
