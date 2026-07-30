@@ -26,6 +26,18 @@ export const getAllApplication = async (page: number = 1, limit: number = 5) => 
     };
 };
 
+// Get All Application By User Id
+export const getAllApplicationByUserId = async (userId: string, page: number = 1, limit: number = 5) => {
+    try {
+        const response = await axiosInstance.get(API.APPLICATION.GET_ALL_BY_USER_ID(userId, page, limit));
+
+        return response.data;
+
+    } catch (err: Error | any) {
+        throw new Error(err.response?.data?.message || err.response || "Failed to fetch applications!");
+    };
+};
+
 // Get Application By ID
 export const getApplicationByID = async (applicationId: string) => {
     try {

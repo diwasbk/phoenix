@@ -3,6 +3,7 @@ const API = {
         GOOGLE_LOGIN: "/auth/google/login",
         SIGN_UP: "/auth/signup",
         LOGIN: '/auth/login',
+        GET_ME: "/auth/me",
         CHANGE_PASSWORD: "/auth/change-password",
         REQUEST_PASSWORD_RESET_EMAIL: "/auth/request-password-reset-email",
         RESET_ACCOUNT_PASSWORD: "/auth/reset-account-password",
@@ -14,6 +15,7 @@ const API = {
     APPLICATION: {
         SUBMIT: '/application/submit',
         GET_ALL: (page: number, limit: number) => `/application/all?page=${page}&limit=${limit}`,
+        GET_ALL_BY_USER_ID: (userId: string, page: number, limit: number) => `/application/by-user-id/${userId}?page=${page}&limit=${limit}`,
         GET_BY_ID: (applicationId: string) => `/application/${applicationId}`,
         UPDATE_BY_ID: (applicationId: string) => `/application/update/${applicationId}`,
         DELETE_BY_ID: (applicationId: string) => `/application/delete/${applicationId}`
@@ -21,6 +23,7 @@ const API = {
     INQUIRY: {
         SEND: "/inquiry/send",
         GET_ALL: (page: number, limit: number) => `/inquiry/all?page=${page}&limit=${limit}`,
+        GET_ALL_BY_USER_ID: (userId: string, page: number, limit: number) => `/inquiry/by-user-id/${userId}?page=${page}&limit=${limit}`,
         DELETE_BY_ID: (inquiryId: string) => `/inquiry/delete/${inquiryId}`
     },
     ACTIVITY_LOGS: {

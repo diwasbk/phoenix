@@ -30,6 +30,18 @@ export const loginUser = async (data: loginType) => {
     };
 };
 
+// Get Me
+export const getMe = async () => {
+    try {
+        const response = await axiosInstance.get(API.AUTH.GET_ME);
+
+        return response.data;
+
+    } catch (err: Error | any) {
+        throw new Error(err.response?.data?.message || err.response || "User not found!");
+    };
+};
+
 // Change Password
 export const changePassword = async (data: changePasswordType) => {
     try {

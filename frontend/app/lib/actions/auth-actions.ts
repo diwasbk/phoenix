@@ -1,5 +1,5 @@
 import { loginType } from "@/app/(auth)/login/schema";
-import { changePassword, disableTwoFactor, enableTwoFactor, loginUser, requestPasswordResetEmail, resetAccountPassword, signupUser, verifyTwoFactorLogin, verifyTwoFactorSetup } from "../api/auth";
+import { changePassword, disableTwoFactor, enableTwoFactor, getMe, loginUser, requestPasswordResetEmail, resetAccountPassword, signupUser, verifyTwoFactorLogin, verifyTwoFactorSetup } from "../api/auth";
 import { signupType } from "@/app/(auth)/signup/schema";
 import { requestPasswordResetEmailType } from "@/app/(auth)/request-password/schema";
 import { resetPasswordType } from "@/app/(auth)/reset-password/schema";
@@ -51,6 +51,32 @@ export const handleLogin = async (data: loginType) => {
     } catch (err: Error | any) {
         return {
             message: err.message || "Login failed!",
+            success: false
+        };
+    };
+};
+
+// Handle Get Me
+export const handleGetMe = async () => {
+    try {
+        const result = await getMe();
+
+        if (!result) {
+            return {
+                message: result.message || "User not found!",
+                success: false
+            };
+        };
+
+        return {
+            message: result.message || "User fetched successfully!",
+            result: result.result,
+            success: true
+        };
+
+    } catch (err: Error | any) {
+        return {
+            message: err.message || "User not found!",
             success: false
         };
     };

@@ -1,5 +1,5 @@
 import { inquiryType } from "@/app/(public)/inquiry/schema";
-import { deleteInquiryByID, getAllInquiries, sendInquiry } from "../api/inquiry";
+import { deleteInquiryByID, getAllInquiries, getAllInquiriesByUserId, sendInquiry } from "../api/inquiry";
 
 // Handle Send Inquiry
 export const handleSendInquiry = async (data: inquiryType) => {
@@ -44,6 +44,33 @@ export const handleGetAllInquiries = async (page: number = 1, limit: number = 5)
             pagination: result.pagination,
             success: true
         };
+    } catch (err: Error | any) {
+        return {
+            message: err.message || "Failed to fetch inquiries!",
+            success: false
+        };
+    };
+};
+
+// Handle Get All Inquiries By User ID
+export const handleGetAllInquiriesByUserId = async (userId: string, page: number = 1, limit: number = 5) => {
+    try {
+        const result = await getAllInquiriesByUserId(userId, page, limit);
+
+        if (!result.success) {
+            return {
+                message: result.message || "Failed to fetch inquiries!",
+                success: false
+            };
+        };
+
+        return {
+            message: result.message || "Inquiries fetched successfully!",
+            result: result.result,
+            pagination: result.pagination,
+            success: true
+        };
+
     } catch (err: Error | any) {
         return {
             message: err.message || "Failed to fetch inquiries!",
